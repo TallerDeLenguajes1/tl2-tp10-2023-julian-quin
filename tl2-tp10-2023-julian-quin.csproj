@@ -7,4 +7,8 @@
     <RootNamespace>tl2_tp10_2023_julian_quin</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
+  </ItemGroup>
+
 </Project>

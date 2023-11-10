@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\tl2-tp10-2023-julian-quin.props" />
+</Project>
