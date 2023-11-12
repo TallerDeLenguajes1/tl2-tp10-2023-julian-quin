@@ -46,7 +46,7 @@ public class TareasRepository:ITareasRepository
     }
     //Obtener detalles de una tarea por su ID. (devuelve un objeto Tarea)
     public Tarea TareaId(int id)
-    {
+    {   
         var queryString = @"SELECT * FROM Tarea WHERE id = @id;";
         Tarea tarea = null;
         using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
@@ -62,7 +62,7 @@ public class TareasRepository:ITareasRepository
                     tarea = new Tarea();
                     tarea.Nombre = reader["nombre"].ToString();
                     tarea.Color = reader["color"].ToString();
-                    tarea.IdUsuarioAsignado =Convert.ToInt32(reader["id_usuario_asignado"]);
+                    if(tarea.IdUsuarioAsignado!=null) tarea.IdUsuarioAsignado =Convert.ToInt32(reader["id_usuario_asignado"]);
                     tarea.Estado = (EstadoTarea)Convert.ToInt32(reader["estado"]);
                     tarea.Id =  Convert.ToInt32(reader["id"]);
                     tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
@@ -94,7 +94,8 @@ public class TareasRepository:ITareasRepository
                     tarea = new Tarea();
                     tarea.Nombre = reader["nombre"].ToString();
                     tarea.Color = reader["color"].ToString();
-                    tarea.IdUsuarioAsignado =Convert.ToInt32(reader["id_usuario_asignado"]);
+                    if(tarea.IdUsuarioAsignado!=null) tarea.IdUsuarioAsignado =Convert.ToInt32(reader["id_usuario_asignado"]);
+                    else tarea.IdUsuarioAsignado = null;
                     tarea.Estado = (EstadoTarea)Convert.ToInt32(reader["estado"]);
                     tarea.Id =  Convert.ToInt32(reader["id"]);
                     tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
@@ -108,7 +109,7 @@ public class TareasRepository:ITareasRepository
     }
     //Listar todas las tareas de un tablero específico. (recibe un idTablero, devuelve un list de tareas)
 
-    public List<Tarea> TareasTablero(int idTablero)
+    public List<Tarea> TareasDeUnTablero(int idTablero)
     {
         string query = "SELECT * FROM Tarea WHERE id_tablero = @idUsuario";
         List<Tarea> tareas = new();
@@ -125,7 +126,7 @@ public class TareasRepository:ITareasRepository
                     tarea = new Tarea();
                     tarea.Nombre = reader["nombre"].ToString();
                     tarea.Color = reader["color"].ToString();
-                    tarea.IdUsuarioAsignado =Convert.ToInt32(reader["id_usuario_asignado"]);
+                    if(tarea.IdUsuarioAsignado!=null) tarea.IdUsuarioAsignado =Convert.ToInt32(reader["id_usuario_asignado"]);
                     tarea.Estado = (EstadoTarea)Convert.ToInt32(reader["estado"]);
                     tarea.Id =  Convert.ToInt32(reader["id"]);
                     tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
@@ -137,16 +138,15 @@ public class TareasRepository:ITareasRepository
         return tareas;
     }
    //Eliminar una tarea (recibe un IdTarea) 
-    public void EliminarTarea(int idUsuario)
+    public void EliminarTarea(int idTarea)
     {
-        var query = "DELETE FROM Tarea WHERE id_usuario_asignado = @idUsuario";
+        var query = "DELETE FROM Tarea WHERE id = @idTarea";
 
         using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
         {
             connection.Open();
             SQLiteCommand command = new SQLiteCommand(query,connection);
-            command.Parameters.Add(new SQLiteParameter("@idUsuario", idUsuario));
-            command.Parameters.Add(new SQLiteParameter("@idUsuario", idUsuario));
+            command.Parameters.Add(new SQLiteParameter("@idTarea", idTarea));
             command.ExecuteNonQuery();
             connection.Close();
 

@@ -5,5 +5,6 @@ public interface ITareasRepository
     void ModificarTarea(int id, Tarea tarea);
     Tarea TareaId(int id);
     List<Tarea> TareasDeUnUsuario(int idUsuario);
-    void EliminarTarea(int idUsuario);
+    void EliminarTarea(int idTarea);
+    List<Tarea> TareasDeUnTablero(int idTablero);
 }
