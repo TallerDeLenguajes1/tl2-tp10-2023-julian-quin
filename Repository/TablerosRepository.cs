@@ -39,7 +39,7 @@ public class TableroRepository:ITableroRepository
     }
 
     //Obtener detalles de un tablero por su ID. (recibe un id y devuelve un Tablero)
-    public Tablero TableroId(int id)
+    public Tablero TableroViaId(int id)
     {
         string query = "SELECT * FROM Tablero WHERE id = @id";
         Tablero tablero=null;
@@ -89,7 +89,7 @@ public class TableroRepository:ITableroRepository
 
     }
     //Listar todos los tableros de un usuario específico. (recibe un IdUsuario, devuelve un list de tableros)
-    public List<Tablero> TablerosUsuario(int idUsuario)
+    public List<Tablero> TablerosDeUnUsuario(int idUsuario)
     {
         string query = "SELECT * FROM Tablero WHERE id_usuario_propietario = @idUsuario";
         //si hago un JOIN, creo que deberia tener un campo nombreUsuarioPropietario en la Clase Tablero, y así lograr mostrar el nombre más el id del propietario.

@@ -1,15 +1,11 @@
-@model Usuario
+@model Usuario 
+@*la vista espera un objeto del tipo Usuario*@
 
-
-<form asp-controller="Usuario" asp-action="NuevoUsuario">
-    <div class="form-group">
-        <label asp-for="@Model.Id"></label>
-        <input asp-for="@Model.Id" class="form-control" />
-    </div>
-
+<form asp-controller="Usuario" asp-action ="NuevoUsuario"> 
     <div class="form-group">
         <label asp-for="@Model.NombreDeUsuario"></label>
         <input asp-for="@Model.NombreDeUsuario" class="form-control" />
     </div>
-    <button type="submit" class="btn btn-primary">Enviar</button>
+    <button type="submit" class="btn btn-success">Enviar</button>
+    @* <button type="submit" class="btn btn-primary">Enviar</button> *@
 </form>

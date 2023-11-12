@@ -28,7 +28,7 @@ public class TareasRepository:ITareasRepository
     }
     public void ModificarTarea(int id, Tarea tarea)
     {
-        var query = "UPDATE Tarea SET nombre, descripcion,color, id_usuario_asignado, estado WHERE id = @id";
+        var query = "UPDATE Tarea SET nombre = @nombre, descripcion = @descripcion ,color = @color, id_usuario_asignado = @idU, estado = @estado WHERE id = @id";
         using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
         {
             connection.Open();
@@ -38,6 +38,7 @@ public class TareasRepository:ITareasRepository
             command.Parameters.Add(new SQLiteParameter("@estado", tarea.Estado));
             command.Parameters.Add(new SQLiteParameter("@idU", tarea.IdUsuarioAsignado));
             command.Parameters.Add(new SQLiteParameter("@color", tarea.Color));
+            command.Parameters.Add(new SQLiteParameter("@id", id));
             command.ExecuteNonQuery();
             connection.Close();
         }
@@ -75,7 +76,7 @@ public class TareasRepository:ITareasRepository
 
     }
     //Listar todas las tareas asignadas a un usuario específico.(recibe un idUsuario devuelve un list de tareas)
-    public List<Tarea> TareasUsuario(int idUsuario)
+    public List<Tarea> TareasDeUnUsuario(int idUsuario)
     {
         string query = "SELECT * FROM Tarea WHERE id_usuario_asignado = @idUsuario";
       
@@ -164,11 +165,5 @@ public class TareasRepository:ITareasRepository
             command.ExecuteNonQuery();
             connection.Close();
         }
-        
-       
-
-
     }
-
-
 }

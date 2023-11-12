@@ -6,7 +6,7 @@ public class UsuarioRepositorio : IUsuarioRepository
 {
     // Listar todos los usuarios registrados. (devuelve un List de Usuarios)
     private string cadenaConexion = "Data Source=DB/Kanban.db;Cache=Shared";
-    public List<Usuario> GetUsser()
+    public List<Usuario> Usuarios()
     {
 
         var queryString = @"SELECT * FROM Usuario;";
@@ -45,22 +45,8 @@ public class UsuarioRepositorio : IUsuarioRepository
         }
     }
 
-    //Modificar un usuario existente. (recibe un Id y un objeto Usuario)
-    public void UpdateUsuario(Usuario usuario, int id)
-    {
-
-        var query = "UPDATE Usuario SET nombre_de_usuario = @name WHERE id = @id";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
-        {
-            connection.Open();
-            var command = new SQLiteCommand(query, connection);
-            command.Parameters.Add(new SQLiteParameter("@name", usuario.NombreDeUsuario));
-            command.ExecuteNonQuery();
-            connection.Close();
-        }
-    }
     //Obtener detalles de un usuario por su ID. (recibe un Id y devuelve un Usuario)
-    public Usuario GetUsserById(int id)
+    public Usuario UsuarioViaId(int id)
     {
 
         var queryString = @"SELECT * FROM Usuario WHERE id = @id;";
@@ -73,7 +59,7 @@ public class UsuarioRepositorio : IUsuarioRepository
 
             using (SQLiteDataReader reader = command.ExecuteReader())
             {
-                while (reader.Read())
+                while (reader.Read()) // cuando no encuentra el id, reader no entra al while HasRow = false
                 {
                     usuario = new Usuario();
                     usuario.Id = Convert.ToInt32(reader["id"]);
@@ -85,20 +71,41 @@ public class UsuarioRepositorio : IUsuarioRepository
         }
         return usuario;
     }
-    public void DeleteUsuario(int id)
+    /// EN ESTOS DOS ULTIMOS METODOS ESTOY DEVOLVIENDO UN VALOR BOOLEANO PARA PODER INFORMAR SI SE REALIZÓ
+    /// LA OPERACION QUE HACE CADA UNO, PERO CREO QUE NO TENDRIA QUE DEVORVER NADA NO SÉ ¡ PREGUNTAR ! 
+    public bool EliminarUsuario(int id)
     {
-        var query = "DELETE FROM Usuario WHERE id = @id";
+        var query = "DELETE FROM Usuario WHERE id = @id"; // si no encuentra el id no se rompe el codigo
+        bool flag = false;
 
         using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
         {
             connection.Open();
             SQLiteCommand command = new SQLiteCommand(query,connection);
             command.Parameters.Add(new SQLiteParameter("@id", id));
-            command.ExecuteNonQuery();
-            
+            var row = command.ExecuteNonQuery();
+            if (row>0) flag = true;
             connection.Close();
-
         }
+        return flag;
+    }
+    //Modificar un usuario existente. (recibe un Id y un objeto Usuario)
+    public bool ActualizarUsuario(Usuario usuario, int id)
+    {
+
+        var query = "UPDATE Usuario SET nombre_de_usuario = @name WHERE id = @id";
+        bool flag = false;
+        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        {
+            connection.Open();
+            var command = new SQLiteCommand(query, connection);
+            command.Parameters.Add(new SQLiteParameter("@name", usuario.NombreDeUsuario));
+            command.Parameters.Add(new SQLiteParameter("@id",id));
+            var row = command.ExecuteNonQuery();
+            if (row>0) flag = true;
+            connection.Close();
+        }
+        return flag;
     }
 
 

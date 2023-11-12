@@ -1,10 +1,10 @@
 namespace tl2_tp10_2023_julian_quin;
 public interface IUsuarioRepository
 {
-    List<Usuario> GetUsser();
+    List<Usuario> Usuarios();
     void NuevoUsuario (Usuario usuario);
-    void UpdateUsuario(Usuario usuario, int id);
-    Usuario GetUsserById(int id);
-    void DeleteUsuario(int id);
+    bool ActualizarUsuario(Usuario usuario, int id);
+    Usuario UsuarioViaId(int id);
+    bool EliminarUsuario(int id);
 
 }
