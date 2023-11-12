@@ -1,0 +1,18 @@
+@model Tablero
+@*la vista espera un objeto del tipo Tablero*@
+
+<form asp-controller="Tablero" asp-action ="NuevoTablero"> 
+    <div class="form-group">
+        <label asp-for="@Model.IdUsuarioPropietario"></label>
+        <input asp-for="@Model.IdUsuarioPropietario" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Nombre"></label>
+        <input asp-for="@Model.Nombre" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Descripcion"></label>
+        <input asp-for="@Model.Descripcion" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Enviar</button>
+</form>

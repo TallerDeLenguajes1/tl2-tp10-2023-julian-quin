@@ -1,0 +1,27 @@
+@model List<Tablero>
+
+<h2>Lista de Tableros</h2>
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th>Id Propietario</th>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tablero in Model)
+        {
+            <tr>
+                <td>@tablero.IdUsuarioPropietario</td>
+                <td>@tablero.Nombre</td>
+                <td>@tablero.Descripcion</td>
+                <td>
+                    <a asp-controller="Tablero" asp-action="ModificarTablero" asp-route-idTablero ="@tablero.Id">Editar</a>    @*asp-route-idUsuario // permite mandar el id hacia el get de Modificar (ya que necesita del parametro idUsuario) y asi mostrar el formulario completo de acuerdo al usuario que se cliquee en la tabla de momento para modificar*@
+                    <a asp-controller="Tablero" asp-action="EliminarTablero" asp-route-idTablero="@tablero.Id" onclick="return confirm('¿Estas seguro que quieres eliminar el elemento?')">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
