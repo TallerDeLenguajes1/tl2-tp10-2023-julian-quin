@@ -15,10 +15,9 @@
         @foreach (var usuario in Model)
         {
             <tr>
-                <td hidden>@usuario.Id</td>
-                <td>@usuario.NombreDeUsuario</td>
-                <td>@usuario.Id</td>
-                <td>
+                <td class="bg-primary">@usuario.NombreDeUsuario</td>
+                <td  class="bg-success">@usuario.Id</td>
+                <td class="bg-info">
                     <a asp-controller="Usuario" asp-action="ModificarUsuario" asp-route-idUsuario ="@usuario.Id">Editar</a>    @*asp-route-idUsuario // permite mandar el id hacia el get de Modificar (ya que necesita del parametro idUsuario) y asi mostrar el formulario completo de acuerdo al usuario que se cliquee en la tabla de momento para modificar*@
                     @*Etiqueta anchor que dirige a un controlador y luego a un método determinado
                      y pasa un id como parámetro y especifica un nombre para el parámetro enviado*@

@@ -1,25 +1,26 @@
 @model Tarea
+<h2>Modificar Tarea</h2>
 
 <form asp-controller="Tarea" asp-action ="ModificarTarea"> 
     <input hidden asp-for="@Model.Id"> @*si borro esto, sucede que al endpoint [post] no llega el id, y si lo dejo y no pongo el hidden lo expongo*@
     <div class="form-group">
-        <label asp-for="@Model.IdTablero"></label>
+        <label asp-for="@Model.IdTablero">Id Tablero</label>
         <input asp-for="@Model.IdTablero" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="@Model.Nombre"></label>
+        <label asp-for="@Model.Nombre">Nombre</label>
         <input asp-for="@Model.Nombre" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="@Model.Descripcion"></label>
+        <label asp-for="@Model.Descripcion">Descripcion</label>
         <input asp-for="@Model.Descripcion" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="@Model.Color"></label>
+        <label asp-for="@Model.Color">Color</label>
         <input asp-for="@Model.Color" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="@Model.Estado"></label>
+        <label asp-for="@Model.Estado">Estado</label>
         <input asp-for="@Model.Estado" class="form-control" />
     </div>
     <button type="submit" class="btn btn-success">Enviar</button>

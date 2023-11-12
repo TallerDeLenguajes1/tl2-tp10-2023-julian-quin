@@ -19,6 +19,7 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-color: rgb(209, 209, 209);
 }
 form {
   width: 40%;
@@ -29,12 +30,14 @@ label {
 }
 input {
   margin-bottom: 10px;
+  border: 0.3px solid rgb(138, 137, 137) !important;
 }
 h2 {
   text-align: center;
-  color: gray;
+  color: rgb(92, 92, 92);
   font-weight: bolder;
+  margin-bottom: 30px;
 }
 a {
-  color: blue;
+  color: rgb(255, 255, 255);
 }

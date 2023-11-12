@@ -21,7 +21,7 @@ public class TareaController : Controller
     }
 
     [HttpGet]
-    public IActionResult NuevaTarea(int idTarea)
+    public IActionResult NuevaTarea()
     {
         return View(new Tarea());
     }

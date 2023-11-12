@@ -1,16 +1,17 @@
 @model Tablero
+<h2>Modificar Tablero</h2>
 <form asp-controller="Tablero" asp-action ="ModificarTablero"> 
     <input hidden asp-for="@Model.Id">
     <div class="form-group">
-        <label asp-for="@Model.IdUsuarioPropietario"></label>
+        <label asp-for="@Model.IdUsuarioPropietario">Id usuario propietario</label>
         <input asp-for="@Model.IdUsuarioPropietario" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="@Model.Nombre"></label>
+        <label asp-for="@Model.Nombre">Nombre</label>
         <input asp-for="@Model.Nombre" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="@Model.Descripcion"></label>
+        <label asp-for="@Model.Descripcion">Descripcion</label>
         <input asp-for="@Model.Descripcion" class="form-control" />
     </div>
     <button type="submit" class="btn btn-success">Enviar</button>
