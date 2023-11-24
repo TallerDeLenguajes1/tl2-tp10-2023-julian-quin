@@ -1,12 +1,21 @@
-@model Usuario 
+@using tl2_tp10_2023_julian_quin.ViewModels
+@model CrearUsuarioViewModel
 @*la vista espera un objeto del tipo Usuario*@
 <h2>Nuevo Usuario</h2>
 
 <form asp-controller="Usuario" asp-action ="NuevoUsuario"> 
     <div class="form-group">
-        <label asp-for="@Model.NombreDeUsuario" >Nombre de usuario</label>
+        <label asp-for="@Model.NombreDeUsuario"></label>
         <input asp-for="@Model.NombreDeUsuario" class="form-control" placeholder="ejemplo: Malena conrado" />
     </div>
+    <div class="form-group">
+        <label asp-for="@Model.Contrasenia"></label>
+        <input asp-for="@Model.Contrasenia" class="form-control" placeholder="ejemplo: Juanito123" />
+    </div>
+     <div class="form-group">
+        <label asp-for="@Model.Rol"></label>
+        <input asp-for="@Model.Rol" class="form-control"/>
+    </div>
     <button type="submit" class="btn btn-success">Enviar</button>
-    @* <button type="submit" class="btn btn-primary">Enviar</button> *@
 </form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

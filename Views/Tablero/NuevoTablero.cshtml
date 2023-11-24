@@ -1,4 +1,5 @@
-@model Tablero
+@using tl2_tp10_2023_julian_quin.ViewModels
+@model CrearTableroViewModel
 @*la vista espera un objeto del tipo Tablero*@
 <h2>Nuevo Tablero</h2>
 
@@ -17,3 +18,4 @@
     </div>
     <button type="submit" class="btn btn-success">Enviar</button>
 </form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

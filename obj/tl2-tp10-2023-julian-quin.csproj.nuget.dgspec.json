@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\julio\\Desktop\\taller2\\TP_Realizados\\tl2-tp10-2023-julian-quin\\tl2-tp10-2023-julian-quin.csproj": {}
+    "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\tl2-tp10-2023-julian-quin.csproj": {}
   },
   "projects": {
-    "C:\\Users\\julio\\Desktop\\taller2\\TP_Realizados\\tl2-tp10-2023-julian-quin\\tl2-tp10-2023-julian-quin.csproj": {
+    "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\tl2-tp10-2023-julian-quin.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\julio\\Desktop\\taller2\\TP_Realizados\\tl2-tp10-2023-julian-quin\\tl2-tp10-2023-julian-quin.csproj",
+        "projectUniqueName": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\tl2-tp10-2023-julian-quin.csproj",
         "projectName": "tl2-tp10-2023-julian-quin",
-        "projectPath": "C:\\Users\\julio\\Desktop\\taller2\\TP_Realizados\\tl2-tp10-2023-julian-quin\\tl2-tp10-2023-julian-quin.csproj",
+        "projectPath": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\tl2-tp10-2023-julian-quin.csproj",
         "packagesPath": "C:\\Users\\julio\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\julio\\Desktop\\taller2\\TP_Realizados\\tl2-tp10-2023-julian-quin\\obj\\",
+        "outputPath": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\julio\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Session": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "System.Data.SQLite": {
               "target": "Package",
               "version": "[1.0.118, )"

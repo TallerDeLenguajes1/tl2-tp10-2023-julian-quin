@@ -1,3 +1,5 @@
+using tl2_tp10_2023_julian_quin.ViewModels;
+
 namespace tl2_tp10_2023_julian_quin;
 public enum EstadoTarea
 {
@@ -23,4 +25,25 @@ public class Tarea
     public EstadoTarea Estado { get => estado; set => estado = value; }
     public int? IdUsuarioAsignado { get => idUsuarioAsignado; set => idUsuarioAsignado = value; }
     public int IdTablero { get => idTablero; set => idTablero = value; }
+    public Tarea (CrearTareaViewModel tarea)
+    {
+        Nombre = tarea.Nombre;
+        Descripcion = tarea.Descripcion;
+        Color = tarea.Color;
+        Estado = tarea.Estado;
+        IdUsuarioAsignado = tarea.IdUsuarioAsignado;
+        idTablero = tarea.IdTablero;
+    }
+    public Tarea(ModificarTareaViewModel tarea )
+    {
+        Id = tarea.Id;
+        Nombre = tarea.Nombre;
+        Descripcion = tarea.Descripcion;
+        Color = tarea.Color;
+        Estado = tarea.Estado;
+        IdUsuarioAsignado = tarea.IdUsuarioAsignado;
+        idTablero = tarea.IdTablero;
+    }
+
+    public Tarea (){}
 }

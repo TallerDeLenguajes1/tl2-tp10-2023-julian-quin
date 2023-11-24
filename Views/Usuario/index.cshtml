@@ -1,4 +1,6 @@
-@model List<Usuario>
+@using tl2_tp10_2023_julian_quin.ViewModels
+@model IndexUsuarioViewModel //este es el objeto o modelo que recibe
+
 @*la vista que espera un modelo del tipo lista de Usuario, es decir se esta definiendo un modelo para la vista*@
 @*usamos la sintaxis Razor para definir código C# en la vista*@
 
@@ -6,21 +8,21 @@
 <table class="table table-dark">
     <thead>
         <tr>
+            <th >Id</th>
             <th>Nombre</th>
-            <th>ID</th>
-            <th></th>
+            <th>Rol</th>
+            <th> </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var usuario in Model)
+        @foreach (var usuario in Model.usuarios)
         {
             <tr>
+                <td class="bg-primary"> @usuario.Id</td> 
                 <td class="bg-primary">@usuario.NombreDeUsuario</td>
-                <td  class="bg-success">@usuario.Id</td>
+                <td  class="bg-success">@usuario.Rol</td>
                 <td class="bg-info">
-                    <a asp-controller="Usuario" asp-action="ModificarUsuario" asp-route-idUsuario ="@usuario.Id">Editar</a>    @*asp-route-idUsuario // permite mandar el id hacia el get de Modificar (ya que necesita del parametro idUsuario) y asi mostrar el formulario completo de acuerdo al usuario que se cliquee en la tabla de momento para modificar*@
-                    @*Etiqueta anchor que dirige a un controlador y luego a un método determinado
-                     y pasa un id como parámetro y especifica un nombre para el parámetro enviado*@
+                    <a asp-controller="Usuario" asp-action="ModificarUsuario" asp-route-idUsuario ="@usuario.Id">Editar</a> 
                     <a asp-controller="Usuario" asp-action="EliminarUsuario" asp-route-idUsuario="@usuario.Id" onclick="return confirm('¿Estas seguro que quieres eliminar el elemento?')">Eliminar</a>
                 </td>
             </tr>

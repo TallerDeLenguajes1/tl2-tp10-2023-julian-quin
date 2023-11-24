@@ -89,7 +89,7 @@ public class TableroRepository:ITableroRepository
 
     }
     //Listar todos los tableros de un usuario específico. (recibe un IdUsuario, devuelve un list de tableros)
-    public List<Tablero> TablerosDeUnUsuario(int idUsuario)
+    public List<Tablero> TablerosDeUnUsuario(int? idUsuario)
     {
         string query = "SELECT * FROM Tablero WHERE id_usuario_propietario = @idUsuario";
         //si hago un JOIN, creo que deberia tener un campo nombreUsuarioPropietario en la Clase Tablero, y así lograr mostrar el nombre más el id del propietario.

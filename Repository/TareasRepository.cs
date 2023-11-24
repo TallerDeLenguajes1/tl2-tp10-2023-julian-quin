@@ -62,7 +62,8 @@ public class TareasRepository:ITareasRepository
                     tarea = new Tarea();
                     tarea.Nombre = reader["nombre"].ToString();
                     tarea.Color = reader["color"].ToString();
-                    if(tarea.IdUsuarioAsignado!=null) tarea.IdUsuarioAsignado =Convert.ToInt32(reader["id_usuario_asignado"]);
+                    if(reader["id_usuario_asignado"]!=null) tarea.IdUsuarioAsignado =Convert.ToInt32(reader["id_usuario_asignado"]);
+                    else tarea.IdUsuarioAsignado = null;
                     tarea.Estado = (EstadoTarea)Convert.ToInt32(reader["estado"]);
                     tarea.Id =  Convert.ToInt32(reader["id"]);
                     tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
@@ -94,7 +95,7 @@ public class TareasRepository:ITareasRepository
                     tarea = new Tarea();
                     tarea.Nombre = reader["nombre"].ToString();
                     tarea.Color = reader["color"].ToString();
-                    if(tarea.IdUsuarioAsignado!=null) tarea.IdUsuarioAsignado =Convert.ToInt32(reader["id_usuario_asignado"]);
+                    if(reader["id_usuario_asignado"]!=null) tarea.IdUsuarioAsignado =Convert.ToInt32(reader["id_usuario_asignado"]);
                     else tarea.IdUsuarioAsignado = null;
                     tarea.Estado = (EstadoTarea)Convert.ToInt32(reader["estado"]);
                     tarea.Id =  Convert.ToInt32(reader["id"]);
@@ -126,7 +127,8 @@ public class TareasRepository:ITareasRepository
                     tarea = new Tarea();
                     tarea.Nombre = reader["nombre"].ToString();
                     tarea.Color = reader["color"].ToString();
-                    if(tarea.IdUsuarioAsignado!=null) tarea.IdUsuarioAsignado =Convert.ToInt32(reader["id_usuario_asignado"]);
+                    if(reader["id_usuario_asignado"]!=null) tarea.IdUsuarioAsignado =Convert.ToInt32(reader["id_usuario_asignado"]);
+                    else tarea.IdUsuarioAsignado = null;
                     tarea.Estado = (EstadoTarea)Convert.ToInt32(reader["estado"]);
                     tarea.Id =  Convert.ToInt32(reader["id"]);
                     tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);

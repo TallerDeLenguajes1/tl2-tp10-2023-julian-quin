@@ -5,6 +5,6 @@ public interface ITableroRepository
     void ModificarTablero(Tablero tablero, int id);
     Tablero TableroViaId(int id);
     List<Tablero> Tableros();
-    List<Tablero> TablerosDeUnUsuario(int idUsuario);
+    List<Tablero> TablerosDeUnUsuario(int? idUsuario);
     void EliminarTablero(int id);
 }

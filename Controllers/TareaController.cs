@@ -2,6 +2,7 @@ using System.Data.SQLite;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tl2_tp10_2023_julian_quin.Models;
+using tl2_tp10_2023_julian_quin.ViewModels;
 
 namespace tl2_tp10_2023_julian_quin.Controllers;
 
@@ -9,64 +10,102 @@ public class TareaController : Controller
 {
     private readonly ILogger<TareaController> _logger;
     private ITareasRepository acceso;
+    private ITableroRepository acceso2;
 
     public TareaController(ILogger<TareaController> logger)
     {
         _logger = logger;
         acceso = new TareasRepository();
+        acceso2 = new TableroRepository();
+        
     }
-    public IActionResult Index()
+
+    [HttpGet]
+    public IActionResult Index (int idTablero)
     {
-        return View(acceso.TareasDeUnTablero(1)); //(Por el momento asuma que el tablero al que pertenece la tarea es siempre la misma, y que no posee usuario asignado)
+        if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
+        var idSession = (int)HttpContext.Session.GetInt32("Id");
+        string nivelDeAcceso = HttpContext.Session.GetString("NivelAcceso");
+        List<Tarea> tareas = new();
+        if (nivelDeAcceso==Rol.administrador.ToString())
+        {
+           tareas = acceso.TareasDeUnTablero(idTablero); 
+        } else 
+        {
+            tareas = acceso.TareasDeUnUsuario(idSession);
+            tareas = tareas.FindAll(t => t.IdTablero == idTablero);
+        }
+        return View(new IndexTareaViewModel(tareas));
     }
+
 
     [HttpGet]
     public IActionResult NuevaTarea()
     {
-        return View(new Tarea());
+        if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
+        return View(new CrearTareaViewModel());
     }
-    
-    
+
+
     [HttpPost]
-    public IActionResult NuevaTarea(Tarea tarea)
+    public IActionResult NuevaTarea(CrearTareaViewModel tarea)
     {
-        acceso.CrearTarea(1,tarea);
-        return RedirectToAction("Index");
+        if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
+        var tareaConvertida = new Tarea(tarea);
+        acceso.CrearTarea(tarea.IdTablero,tareaConvertida);
+        return View("Index",tarea.IdTablero);
     }
+
+    
 
     [HttpGet]
     public IActionResult ModificarTarea(int idTarea)
     {
-        return View(acceso.TareaId(idTarea));
+        if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
+        ModificarTareaViewModel tareaView;
+        Tarea tarea; 
+        if (!EsAdmin())
+        {
+            int idSession = (int)HttpContext.Session.GetInt32("Id");
+            tarea = acceso.TareaId(idTarea);
+            if (tarea.IdUsuarioAsignado == idSession) 
+            { 
+                tareaView = new ModificarTareaViewModel(tarea); 
+                View(tareaView);
+
+            } else return NotFound("Error 404, la tarea no te pertenece");
+        }
+        tarea = acceso.TareaId(idTarea);
+        tareaView = new ModificarTareaViewModel(tarea); 
+        return View(tareaView);
     }
 
     [HttpPost]
-    public IActionResult ModificarTarea(Tarea tarea)
+    public IActionResult ModificarTarea(ModificarTareaViewModel tarea)
     {
-        acceso.ModificarTarea(tarea.Id,tarea);
-        return RedirectToAction("Index");
+        if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
+        var tareaView = new Tarea(tarea);
+        acceso.ModificarTarea(tarea.Id, tareaView);
+        return View("Index",tarea.IdTablero);
     }
 
     public IActionResult EliminarTarea(int idTarea)
     {
+        if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
         acceso.EliminarTarea(idTarea);
-        return RedirectToAction("Index");
+        return Ok();
+    }
+    private bool EsAdmin()
+    {
+        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelAcceso") == "administrador") return true;
+        return false;
     }
 
+    private bool SeLogueo()
+    {
+        if (HttpContext.Session.GetString("Usuario") != null && HttpContext.Session.GetInt32("Id") != null
+        && HttpContext.Session.GetString("NivelAcceso") != null) return true;
 
-    // Creo que estan bien, but segun lo que interpreto de la consigna no se pidieron.
-
-    // [HttpGet]
-    // public IActionResult TareasDeUnUsuario(int idUsuario)
-    // {
-    //     var lista = acceso.TareasDeUnUsuario(2);
-    //     return View("Index",lista);
-    // }
-
-    // [HttpGet]
-    // public IActionResult TareasDeUnTablero(int idTablero)
-    // {
-    //     var lista = acceso.TareasDeUnTablero(4);
-    //     return View("Index",lista);
-    // }
+        return false;
+    }
 }

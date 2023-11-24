@@ -1,0 +1,20 @@
+@using tl2_tp10_2023_julian_quin.ViewModels
+@model LoginViewModel 
+<h2>Logueo</h2>
+<form asp-controller="Login" asp-action="Login" method="post">
+    <div class="form-group">
+        <label asp-for="@Model.Nombre"></label>
+        <input asp-for="@Model.Nombre" class="form-control" />
+        <span asp-validation-for="@Model.Nombre" class="text-danger"></span>    
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Contrasenia"></label>
+        <input asp-for="@Model.Contrasenia" class="form-control" />
+        <span asp-validation-for="@Model.Contrasenia" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success">Enviar</button>
+</form>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> } @*para que el formulario valide los datos – En el Front End*@
+

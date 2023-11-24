@@ -1,34 +1,36 @@
-@model List<Tarea>
+@using tl2_tp10_2023_julian_quin.ViewModels
+@model IndexTareaViewModel
 
 <h2>Lista de Tareas</h2>
-<table class="table table-dark">
+
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>ID Tarea</th>
+            <th hidden>ID Tarea</th>
             <th>ID Tablero</th>
             <th>Nombre</th>
             <th>Descripcion</th>
             <th>Color</th>
-            <th>ID Usuario Asignado</th>
+            <th>Usuario Asignado</th>
             <th>Esatdo</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var tarea in Model)
+        @foreach (var tarea in Model.tareasView)
         {
+
             <tr>
-                <td>@tarea.Id</td>
+                <td hidden>@tarea.Id</td>
                 <td>@tarea.IdTablero</td>
                 <td>@tarea.Nombre</td>
                 <td>@tarea.Descripcion</td>
                 <td>@tarea.Color</td>
-                <td>@tarea.IdUsuarioAsignado</td>
+                <td>@tarea.UsuarioAsignado</td>
                 <td>@tarea.Estado</td>
                 <td>
                     <a asp-controller="Tarea" asp-action="ModificarTarea" asp-route-idTarea ="@tarea.Id">Editar</a>
                     <a asp-controller="Tarea" asp-action="EliminarTarea" asp-route-idTarea="@tarea.Id" onclick="return confirm('¿Estas seguro que quieres eliminar el elemento?')">Eliminar</a>
-                </td>
             </tr>
         }
     </tbody>

@@ -22,7 +22,9 @@ public class UsuarioRepositorio : IUsuarioRepository
                 {
                     var usuario = new Usuario();
                     usuario.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
+                    usuario.Contrasenia = reader["pass"].ToString();
                     usuario.Id = Convert.ToInt32(reader["id"]);
+                    usuario.Rol = (Rol)Convert.ToInt32(reader["rol"]);
                     usuarios.Add(usuario);
 
                 }
@@ -33,13 +35,15 @@ public class UsuarioRepositorio : IUsuarioRepository
     }
     public void NuevoUsuario(Usuario usuario)
     {
-        var query = $"INSERT INTO Usuario (nombre_de_usuario) VALUES (@name)";
+        var query = $"INSERT INTO Usuario (nombre_de_usuario,rol,pass) VALUES (@name,@rol,@pass)";
         using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
         {
 
             connection.Open();
             var command = new SQLiteCommand(query, connection);
             command.Parameters.Add(new SQLiteParameter("@name", usuario.NombreDeUsuario));
+            command.Parameters.Add(new SQLiteParameter("@rol", usuario.Rol));
+            command.Parameters.Add(new SQLiteParameter("@pass", usuario.Contrasenia));
             command.ExecuteNonQuery();
             connection.Close();
         }
@@ -64,6 +68,7 @@ public class UsuarioRepositorio : IUsuarioRepository
                     usuario = new Usuario();
                     usuario.Id = Convert.ToInt32(reader["id"]);
                     usuario.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
+                    usuario.Rol = (Rol)Convert.ToInt32(reader["rol"]);
 
                 }
             }
@@ -93,7 +98,7 @@ public class UsuarioRepositorio : IUsuarioRepository
     public bool ActualizarUsuario(Usuario usuario, int id)
     {
 
-        var query = "UPDATE Usuario SET nombre_de_usuario = @name WHERE id = @id";
+        var query = "UPDATE Usuario SET nombre_de_usuario = @name, rol = @rol, pass = @contras WHERE id = @id";
         bool flag = false;
         using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
         {
@@ -101,6 +106,8 @@ public class UsuarioRepositorio : IUsuarioRepository
             var command = new SQLiteCommand(query, connection);
             command.Parameters.Add(new SQLiteParameter("@name", usuario.NombreDeUsuario));
             command.Parameters.Add(new SQLiteParameter("@id",id));
+            command.Parameters.Add(new SQLiteParameter("@rol",usuario.Rol));
+            command.Parameters.Add(new SQLiteParameter("@pass",usuario.Contrasenia));
             var row = command.ExecuteNonQuery();
             if (row>0) flag = true;
             connection.Close();
