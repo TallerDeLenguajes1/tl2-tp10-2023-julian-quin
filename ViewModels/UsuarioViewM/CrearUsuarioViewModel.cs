@@ -11,7 +11,8 @@ public class CrearUsuarioViewModel
     [Required(ErrorMessage = "Este campo es requerido")]
     [Display(Name = "Contraseña")]
     public string Contrasenia { get; set ; }
-
+    
+    [Required(ErrorMessage = "Este campo es requerido")]
     [Display(Name = "Rol")]
     public Rol Rol { get; set; }
 }

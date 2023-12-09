@@ -7,20 +7,19 @@ namespace tl2_tp10_2023_julian_quin.Controllers;
 public class UsuarioController : Controller
 {
     private readonly ILogger<UsuarioController> _logger;
-    private IUsuarioRepository acceso;
+    private readonly IUsuarioRepository accesoUsuarios;
 
-    public UsuarioController(ILogger<UsuarioController> logger)
+    public UsuarioController(ILogger<UsuarioController> logger, IUsuarioRepository usuarioRepository)
     {
         _logger = logger;
-        acceso = new UsuarioRepositorio();
-
+        this.accesoUsuarios = usuarioRepository;
     }
 
     public IActionResult Index()
     { 
         if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
         else if(!EsAdmin()) return NotFound("ERROR 404 usted no es un usuario Administrador");
-        var usuarios = acceso.Usuarios();
+        var usuarios = accesoUsuarios.Usuarios();
         var usuariosView = new IndexUsuarioViewModel(usuarios);
         return View(usuariosView);
     }
@@ -37,9 +36,10 @@ public class UsuarioController : Controller
     public IActionResult NuevoUsuario(CrearUsuarioViewModel usuario)
     {
         if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
-        else if(!EsAdmin())return NotFound("ERROR 404 usted no es un usuario Administrador") ;
+        if(!EsAdmin())return NotFound("ERROR 404 usted no es un usuario Administrador") ;
+        if(!ModelState.IsValid) return RedirectToAction("Index");
         var nuevoUsuario = new Usuario(usuario);
-        acceso.NuevoUsuario(nuevoUsuario);
+        accesoUsuarios.NuevoUsuario(nuevoUsuario);
         return RedirectToAction("Index");
     }
 
@@ -48,7 +48,7 @@ public class UsuarioController : Controller
     {
         if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
         else if(!EsAdmin())return NotFound("ERROR 404 usted no es un usuario Administrador");
-        var usuario = acceso.UsuarioViaId(idUsuario);
+        var usuario = accesoUsuarios.UsuarioViaId(idUsuario);
         var usuarioViewModel = new ModificarUsuarioViewModel(usuario);
         return View(usuarioViewModel);
     }
@@ -57,18 +57,19 @@ public class UsuarioController : Controller
     public IActionResult ModificarUsuario(ModificarUsuarioViewModel usuarioUp)
     {
         if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
-        else if(!EsAdmin())return NotFound("ERROR 404 usted no es un usuario Administrador");
+        if(!EsAdmin())return NotFound("ERROR 404 usted no es un usuario Administrador");
+        if(!ModelState.IsValid) return RedirectToAction("Index");
         var usuario = new Usuario(usuarioUp);
-        acceso.ActualizarUsuario(usuario, usuario.Id);
+        accesoUsuarios.ActualizarUsuario(usuario, usuario.Id);
         return RedirectToAction("Index");
     }
 
     public IActionResult EliminarUsuario(int idUsuario)
     {
         if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
-        else if(!EsAdmin())return NotFound("ERROR 404 usted no es un usuario Administrador");
+        if(!EsAdmin())return NotFound("ERROR 404 usted no es un usuario Administrador");
         if(!EsAdmin())return RedirectToAction("Index");
-        acceso.EliminarUsuario(idUsuario);
+        accesoUsuarios.EliminarUsuario(idUsuario);
         return RedirectToAction("Index");
     }
 

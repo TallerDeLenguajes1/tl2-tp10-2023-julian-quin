@@ -1,7 +1,4 @@
-using System.Data.SQLite;
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using tl2_tp10_2023_julian_quin.Models;
 using tl2_tp10_2023_julian_quin.ViewModels;
 
 namespace tl2_tp10_2023_julian_quin.Controllers;
@@ -9,41 +6,50 @@ namespace tl2_tp10_2023_julian_quin.Controllers;
 public class TareaController : Controller
 {
     private readonly ILogger<TareaController> _logger;
-    private ITareasRepository acceso;
-    private ITableroRepository acceso2;
+    private readonly ITareasRepository _accesoTareas;
+    private readonly ITableroRepository _accesoTableros;
 
-    public TareaController(ILogger<TareaController> logger)
+    public TareaController(ILogger<TareaController> logger, ITareasRepository tareasRepository, ITableroRepository tableroRepository)
     {
         _logger = logger;
-        acceso = new TareasRepository();
-        acceso2 = new TableroRepository();
-        
+        _accesoTareas = tareasRepository;
+        _accesoTableros = tableroRepository;
+
     }
 
     [HttpGet]
-    public IActionResult Index (int idTablero)
+    public IActionResult Index(int idTablero)
     {
         if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
         var idSession = (int)HttpContext.Session.GetInt32("Id");
-        string nivelDeAcceso = HttpContext.Session.GetString("NivelAcceso");
-        List<Tarea> tareas = new();
-        if (nivelDeAcceso==Rol.administrador.ToString())
-        {
-           tareas = acceso.TareasDeUnTablero(idTablero); 
-        } else 
-        {
-            tareas = acceso.TareasDeUnUsuario(idSession);
-            tareas = tareas.FindAll(t => t.IdTablero == idTablero);
-        }
-        return View(new IndexTareaViewModel(tareas));
-    }
+        List<Tarea> tareas;
 
+        if (EsAdmin()) tareas = _accesoTareas.TareasDeUnTablero(idTablero);
+        else
+        {
+            if (idSession == _accesoTableros.TableroViaId(idTablero).IdUsuarioPropietario) tareas = _accesoTareas.TareasDeUnTablero(idTablero);
+            else return NotFound();
+        }
+        return View(new IndexTareaViewModel(tareas, idTablero));
+
+    }
 
     [HttpGet]
     public IActionResult NuevaTarea()
     {
         if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
-        return View(new CrearTareaViewModel());
+        var usuarioId = (int)HttpContext.Session.GetInt32("Id");
+        var nuevaTarea = new CrearTareaViewModel();
+        if (EsAdmin())
+        {
+            nuevaTarea.Tableros = _accesoTableros.Tableros();
+            return View(nuevaTarea);
+        }
+        else
+        {
+            nuevaTarea.Tableros = _accesoTableros.TablerosDeUnUsuario(usuarioId);
+            return View(nuevaTarea);
+        }
     }
 
 
@@ -51,50 +57,72 @@ public class TareaController : Controller
     public IActionResult NuevaTarea(CrearTareaViewModel tarea)
     {
         if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
+        if (!ModelState.IsValid) return RedirectToAction("Index");
         var tareaConvertida = new Tarea(tarea);
-        acceso.CrearTarea(tarea.IdTablero,tareaConvertida);
-        return View("Index",tarea.IdTablero);
-    }
+        _accesoTareas.CrearTarea(tarea.IdTablero, tareaConvertida);
+        return RedirectToAction("Index", new { idTablero = tarea.IdTablero });
 
-    
+    }
 
     [HttpGet]
     public IActionResult ModificarTarea(int idTarea)
     {
         if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
-        ModificarTareaViewModel tareaView;
-        Tarea tarea; 
-        if (!EsAdmin())
+        var tarea = _accesoTareas.TareaId(idTarea);
+        var usuarioId = (int)HttpContext.Session.GetInt32("Id");
+        if (EsAdmin())
         {
-            int idSession = (int)HttpContext.Session.GetInt32("Id");
-            tarea = acceso.TareaId(idTarea);
-            if (tarea.IdUsuarioAsignado == idSession) 
-            { 
-                tareaView = new ModificarTareaViewModel(tarea); 
-                View(tareaView);
-
-            } else return NotFound("Error 404, la tarea no te pertenece");
+            var tareaAmodificadar = new ModificarTareaViewModel(tarea);
+            tareaAmodificadar.Tableros = _accesoTableros.Tableros();
+            return View(tareaAmodificadar);
         }
-        tarea = acceso.TareaId(idTarea);
-        tareaView = new ModificarTareaViewModel(tarea); 
-        return View(tareaView);
+        else
+        {
+            var tareaAmodificadar = new ModificarTareaViewModel(tarea);
+            tareaAmodificadar.Tableros = _accesoTableros.TablerosDeUnUsuario(usuarioId);
+            return View(tareaAmodificadar);
+        }
+
     }
 
     [HttpPost]
     public IActionResult ModificarTarea(ModificarTareaViewModel tarea)
     {
         if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
-        var tareaView = new Tarea(tarea);
-        acceso.ModificarTarea(tarea.Id, tareaView);
-        return View("Index",tarea.IdTablero);
+        if (!ModelState.IsValid) return RedirectToAction("Index");
+        var tareaRecuperada = new Tarea(tarea);
+        _accesoTareas.ModificarTarea(tarea.Id, tareaRecuperada);
+        return RedirectToAction("Index", new { idTablero = tarea.IdTablero });
+
     }
 
     public IActionResult EliminarTarea(int idTarea)
     {
         if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
-        acceso.EliminarTarea(idTarea);
-        return Ok();
+        var tarea = _accesoTareas.TareaId(idTarea);
+        var tablero = _accesoTableros.TableroViaId(tarea.IdTablero);
+        _accesoTareas.EliminarTarea(idTarea);
+        return RedirectToAction("Index", new { idTablero = tarea.IdTablero });  
     }
+    //[HttpGet]
+    // public IActionResult AsignarUsuario(int idTarea, int idTablero)
+    // {
+    //     if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
+    //     var tarea = _accesoTareas.TareaId(idTarea);
+    //     if (EsAdmin()) return View(tarea);
+    //     int idSession = (int)HttpContext.Session.GetInt32("Id");
+    //     var tablero = _accesoTableros.TableroViaId(idTablero);
+    //     if (idSession == tablero.IdUsuarioPropietario) return View(tarea);
+    //     return NotFound("no puedes manipular esta tarea");
+
+    // }
+    // [HttpPost]
+    // public IActionResult AsignarUsuario(Tarea tarea)
+    // {
+    //     if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
+    //     _accesoTareas.AsignarTarea((int)tarea.IdUsuarioAsignado, tarea.Id);
+    //     return RedirectToAction("Index", new { idTablero = tarea.IdTablero });
+    // }
     private bool EsAdmin()
     {
         if (HttpContext.Session != null && HttpContext.Session.GetString("NivelAcceso") == "administrador") return true;

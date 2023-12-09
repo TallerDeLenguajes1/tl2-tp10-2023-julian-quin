@@ -32,6 +32,10 @@ input {
   margin-bottom: 10px;
   border: 0.3px solid rgb(138, 137, 137) !important;
 }
+select {
+  margin-bottom: 10px;
+  border: 0.3px solid rgb(138, 137, 137) !important;
+}
 h2 {
   text-align: center;
   color: rgb(92, 92, 92);
@@ -40,4 +44,17 @@ h2 {
 }
 a {
   color: rgb(255, 255, 255);
+}
+figure {
+  text-align: center;
+}
+nav ul {
+  list-style: none !important;
+}
+td 
+{
+  text-align: center;
+}
+th {
+  text-align: center;
 }

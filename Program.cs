@@ -1,16 +1,22 @@
+using tl2_tp10_2023_julian_quin;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDistributedMemoryCache();
+var CadenaDeConexion = builder.Configuration.GetConnectionString("SqliteConexion")!.ToString();
+builder.Services.AddSingleton<string>(CadenaDeConexion); //inyecto la cadena de conexion
+builder.Services.AddScoped<ITareasRepository,TareasRepository>();
+builder.Services.AddScoped<IUsuarioRepository,UsuarioRepository>();
+builder.Services.AddScoped<ITableroRepository,TableroRepository>();
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromSeconds(300);
+    options.IdleTimeout = TimeSpan.FromSeconds(10000);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });;
-
 
 var app = builder.Build();
 
@@ -31,6 +37,5 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+    pattern: "{controller=Login}/{action=Index}/{id?}");
 app.Run();

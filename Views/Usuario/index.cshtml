@@ -4,7 +4,15 @@
 @*la vista que espera un modelo del tipo lista de Usuario, es decir se esta definiendo un modelo para la vista*@
 @*usamos la sintaxis Razor para definir código C# en la vista*@
 
-<h2>Lista de Usuarios</h2>
+<h2>Usuarios</h2>
+<nav>
+    <ul>  
+        <li>
+            <a class="btn btn-success btn-lg active" role="button" aria-pressed="true" asp-controller="Usuario" asp-action="NuevoUsuario">Nuevo Usuario</a>
+        </li>
+    </ul>
+</nav>
+
 <table class="table table-dark">
     <thead>
         <tr>

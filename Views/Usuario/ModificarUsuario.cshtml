@@ -8,14 +8,17 @@
     <div class="form-group">
         <label asp-for="@Model.NombreDeUsuario"></label>
         <input asp-for="@Model.NombreDeUsuario" class="form-control" />
+        <span asp-validation-for="@Model.NombreDeUsuario" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="@Model.Contrasenia"></label>
         <input asp-for="@Model.Contrasenia" class="form-control"/>
+        <span asp-validation-for="@Model.Contrasenia" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="@Model.Rol"></label>
         <input asp-for="@Model.Rol" class="form-control"/>
+        <span asp-validation-for="@Model.Rol" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-success">Enviar</button>
 </form>

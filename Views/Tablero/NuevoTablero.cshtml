@@ -5,16 +5,25 @@
 
 <form asp-controller="Tablero" asp-action ="NuevoTablero"> 
     <div class="form-group">
-        <label asp-for="@Model.IdUsuarioPropietario">Id usuario propietario</label>
-        <input asp-for="@Model.IdUsuarioPropietario" class="form-control" />
+        <label asp-for="@Model.IdUsuarioPropietario">Asignar Propietario</label>@*muestra el nombre*@
+        <select asp-for="@Model.IdUsuarioPropietario" class="form-control"> @*muestra la caja donde se escribe o selecciona*@
+        <option value="" selected>Seleccionar</option>
+        @foreach (var usuario in Model.usuarios)
+        {
+            <option value="@usuario.Id">@usuario.NombreDeUsuario</option>
+        }
+        </select>
+        <span asp-validation-for="@Model.IdUsuarioPropietario" class="text-danger"></span>   
     </div>
     <div class="form-group">
         <label asp-for="@Model.Nombre">Nombre</label>
         <input asp-for="@Model.Nombre" class="form-control" />
+        <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="@Model.Descripcion">Descripcion</label>
-        <input asp-for="@Model.Descripcion" class="form-control" />
+        <input asp-for="@Model.Descripcion" class="form-control"/>
+        <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-success">Enviar</button>
 </form>

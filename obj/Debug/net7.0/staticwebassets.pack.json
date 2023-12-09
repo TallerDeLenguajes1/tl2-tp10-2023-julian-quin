@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\img\\Kanban.jpg",
+      "PackagePath": "staticwebassets\\img\\Kanban.jpg"
+    },
+    {
       "Id": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

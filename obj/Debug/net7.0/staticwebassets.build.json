@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7GoysUJkklmCcoGAG6Qf8CyetS8CVlyRA6fuhhfat+M=",
+  "Hash": "rpXrZT3MPV93C8vJjStk1pVrgbg7OlJo1tGCHiwVB0s=",
   "Source": "tl2-tp10-2023-julian-quin",
   "BasePath": "_content/tl2-tp10-2023-julian-quin",
   "Mode": "Default",
@@ -83,6 +83,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\img\\Kanban.jpg",
+      "SourceId": "tl2-tp10-2023-julian-quin",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\",
+      "BasePath": "_content/tl2-tp10-2023-julian-quin",
+      "RelativePath": "img/Kanban.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\Kanban.jpg"
     },
     {
       "Identity": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\js\\site.js",

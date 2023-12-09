@@ -2,10 +2,16 @@
 using System.Data.SQLite;
 
 namespace tl2_tp10_2023_julian_quin;
-public class UsuarioRepositorio : IUsuarioRepository
+public class UsuarioRepository : IUsuarioRepository
 {
-    // Listar todos los usuarios registrados. (devuelve un List de Usuarios)
-    private string cadenaConexion = "Data Source=DB/Kanban.db;Cache=Shared";
+    private readonly string cadenaConexion;
+
+    public UsuarioRepository(string CadenaDeConexion)
+    {
+        this.cadenaConexion = CadenaDeConexion;
+    }
+    public UsuarioRepository(){}
+
     public List<Usuario> Usuarios()
     {
 
@@ -42,7 +48,7 @@ public class UsuarioRepositorio : IUsuarioRepository
             connection.Open();
             var command = new SQLiteCommand(query, connection);
             command.Parameters.Add(new SQLiteParameter("@name", usuario.NombreDeUsuario));
-            command.Parameters.Add(new SQLiteParameter("@rol", usuario.Rol));
+            command.Parameters.Add(new SQLiteParameter("@rol",usuario.Rol));
             command.Parameters.Add(new SQLiteParameter("@pass", usuario.Contrasenia));
             command.ExecuteNonQuery();
             connection.Close();
@@ -74,6 +80,7 @@ public class UsuarioRepositorio : IUsuarioRepository
             }
             connection.Close();
         }
+        if(usuario==null) throw new Exception("Usuario No encontrado");
         return usuario;
     }
     /// EN ESTOS DOS ULTIMOS METODOS ESTOY DEVOLVIENDO UN VALOR BOOLEANO PARA PODER INFORMAR SI SE REALIZÓ
@@ -98,7 +105,7 @@ public class UsuarioRepositorio : IUsuarioRepository
     public bool ActualizarUsuario(Usuario usuario, int id)
     {
 
-        var query = "UPDATE Usuario SET nombre_de_usuario = @name, rol = @rol, pass = @contras WHERE id = @id";
+        var query = "UPDATE Usuario SET nombre_de_usuario = @name, rol = @rol, pass = @password WHERE id = @id";
         bool flag = false;
         using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
         {
@@ -107,12 +114,41 @@ public class UsuarioRepositorio : IUsuarioRepository
             command.Parameters.Add(new SQLiteParameter("@name", usuario.NombreDeUsuario));
             command.Parameters.Add(new SQLiteParameter("@id",id));
             command.Parameters.Add(new SQLiteParameter("@rol",usuario.Rol));
-            command.Parameters.Add(new SQLiteParameter("@pass",usuario.Contrasenia));
+            command.Parameters.Add(new SQLiteParameter("@password",usuario.Contrasenia));
             var row = command.ExecuteNonQuery();
             if (row>0) flag = true;
             connection.Close();
         }
         return flag;
+    }
+    public Usuario Logueo(string contrasenia, string usser)
+    {
+        var queryString = @"SELECT * FROM Usuario Where pass = @contrasenia AND nombre_de_usuario = @nombreUsuario;";
+        Usuario usuario = null;
+        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        {
+            SQLiteCommand command = new SQLiteCommand(queryString, connection);
+            connection.Open();
+            command.Parameters.Add(new SQLiteParameter("@contrasenia",contrasenia));
+            command.Parameters.Add(new SQLiteParameter("@nombreUsuario",usser));
+
+            using (SQLiteDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    usuario = new();
+                    usuario.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
+                    usuario.Contrasenia = reader["pass"].ToString();
+                    usuario.Id = Convert.ToInt32(reader["id"]);
+                    usuario.Rol = (Rol)Convert.ToInt32(reader["rol"]);
+
+                }
+            }
+            connection.Close();
+        }
+        if(usuario==null) throw new Exception("Usuario No encontrado");
+        return usuario;
+
     }
 
 

@@ -2,35 +2,37 @@
 @model IndexTareaViewModel
 
 <h2>Lista de Tareas</h2>
+<nav class="mb-4">
+    <ul class="list-unstyled">
+        <li class="d-inline-block">
+            <a class="btn btn-secondary btn-lg" role="button" aria-pressed="true" asp-controller="Tablero" asp-action="Index" style="color: rgb(255, 255, 255);">Volver</a>
+        </li>
+    </ul>
+</nav>
 
 <table class="table table-striped">
     <thead>
         <tr>
-            <th hidden>ID Tarea</th>
-            <th>ID Tablero</th>
             <th>Nombre</th>
             <th>Descripcion</th>
             <th>Color</th>
-            <th>Usuario Asignado</th>
-            <th>Esatdo</th>
-            <th></th>
+            <th>Estado</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var tarea in Model.tareasView)
         {
-
             <tr>
-                <td hidden>@tarea.Id</td>
-                <td>@tarea.IdTablero</td>
                 <td>@tarea.Nombre</td>
                 <td>@tarea.Descripcion</td>
                 <td>@tarea.Color</td>
-                <td>@tarea.UsuarioAsignado</td>
                 <td>@tarea.Estado</td>
                 <td>
-                    <a asp-controller="Tarea" asp-action="ModificarTarea" asp-route-idTarea ="@tarea.Id">Editar</a>
-                    <a asp-controller="Tarea" asp-action="EliminarTarea" asp-route-idTarea="@tarea.Id" onclick="return confirm('¿Estas seguro que quieres eliminar el elemento?')">Eliminar</a>
+                    <a class="btn btn-secondary btn-sm" role="button" asp-controller="Tarea" asp-action="ModificarTarea" asp-route-idTarea="@tarea.Id">Editar</a>
+                    <a class="btn btn-primary btn-sm" role="button" asp-controller="Tarea" asp-action="EliminarTarea" asp-route-idTarea="@tarea.Id" onclick="return confirm('¿Estas seguro que quieres eliminar el elemento?')">Eliminar</a>
+                    @* <a class="btn btn-primary btn-sm" role="button" asp-controller="Tarea" asp-action="AsignarUsuario" asp-route-idTarea="@tarea.Id" asp-route-idTablero="@tarea.IdTablero">Asignar Usuario</a> *@
+                </td>
             </tr>
         }
     </tbody>

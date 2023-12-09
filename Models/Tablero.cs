@@ -15,7 +15,8 @@ public class Tablero
 
     public Tablero (CrearTableroViewModel tableroView)
     {
-        this.idUsuarioPropietario = tableroView.IdUsuarioPropietario;
+        //para crear no necesito el id
+        this.idUsuarioPropietario = tableroView.IdUsuarioPropietario; 
         this.nombre = tableroView.Nombre;
         this.descripcion = tableroView.Descripcion;
     }

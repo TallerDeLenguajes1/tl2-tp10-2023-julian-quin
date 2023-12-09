@@ -4,21 +4,30 @@ namespace tl2_tp10_2023_julian_quin.ViewModels;
 
 public class ModificarTareaViewModel
 {
-    public int Id{get; set;}
+    
     [Required(ErrorMessage = "Este campo es requerido")]
-    [Display(Name = "Id del propietario")]
+    [Display(Name = "Nombre")]
     public string Nombre  { get; set;}
+
+    [Required(ErrorMessage = "Este campo es requerido")]
+    [Display(Name = "Descripcion")]
     public string Descripcion  { get; set;}
+
+    [Required(ErrorMessage = "Este campo es requerido")]
+    [Display(Name = "Color")]
     public string Color  { get; set;}
+    
     [Required(ErrorMessage = "Este campo es requerido")]
     [Display(Name = "Estado")]
     public EstadoTarea Estado  { get; set;}
-    public int? IdUsuarioAsignado  { get; set;}
 
     [Required(ErrorMessage = "Este campo es requerido")]
-    [Display(Name = "Id De Tablero")]
-    public int IdTablero  { get; set;}
-
+    public int IdTablero  { get; set;} // para el link que lleva al get 
+    
+    
+    public int? IdUsuarioAsignado  { get; set;}
+    public List<Tablero> Tableros; 
+    public int Id{get; set;} // para identificar la tarea desde el metodo get
     public ModificarTareaViewModel(Tarea tarea)
     {
         Id = tarea.Id;
@@ -29,6 +38,7 @@ public class ModificarTareaViewModel
         IdTablero = tarea.IdTablero;
         IdUsuarioAsignado = tarea.IdUsuarioAsignado;
     }
+    public ModificarTareaViewModel(){}
     
     
 }

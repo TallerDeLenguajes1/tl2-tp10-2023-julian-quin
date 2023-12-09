@@ -1,15 +1,25 @@
 @using tl2_tp10_2023_julian_quin.ViewModels
 @model CrearTareaViewModel
-<h2>Modificar Tarea</h2>
+<h2>Crear Tarea</h2>
 
 <form asp-controller="Tarea" asp-action ="NuevaTarea"> 
+    
     <div class="form-group">
-        <label asp-for="@Model.IdTablero">Id Tablero</label>
-        <input asp-for="@Model.IdTablero" class="form-control" />
+        <label asp-for="@Model.IdTablero">Tablero</label>
+        <select asp-for="@Model.IdTablero" class="form-control">
+        <option value="" selected>Seleccionar</option>
+        @foreach (var tablero in Model.Tableros)
+        {
+            <option value="@tablero.Id">@tablero.Nombre</option>
+        }
+        </select>
+        <span asp-validation-for="@Model.IdTablero" class="text-danger"></span>   
     </div>
+  
     <div class="form-group">
         <label asp-for="@Model.Nombre">Nombre</label>
         <input asp-for="@Model.Nombre" class="form-control" />
+        <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="@Model.Descripcion">Descripcion</label>
@@ -22,6 +32,8 @@
     <div class="form-group">
         <label asp-for="@Model.Estado">Estado</label>
         <input asp-for="@Model.Estado" class="form-control" />
+        <span asp-validation-for="@Model.Estado" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-success">Enviar</button>
 </form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

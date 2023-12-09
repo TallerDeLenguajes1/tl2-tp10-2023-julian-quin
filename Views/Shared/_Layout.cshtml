@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - tl2_tp10_2023_julian_quin</title>
+    <title>@ViewData["Title"] Tablero kamban</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/tl2_tp10_2023_julian_quin.styles.css" asp-append-version="true" />
@@ -20,28 +20,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="NuevoUsuario">Alta usuario</a>
-                        </li>
-                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Tablero" asp-action="Index">Tableros</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tablero" asp-action="NuevoTablero">Alta tablero</a>
-                        </li>
-                         @* <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tarea" asp-action="Index">Tareas</a>
-                        </li> *@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tarea" asp-action="NuevaTarea">Nueva tarea tablero</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
                         </li>
                     </ul>
                 </div>

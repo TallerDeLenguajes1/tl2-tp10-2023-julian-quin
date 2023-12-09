@@ -1,12 +1,21 @@
 @using tl2_tp10_2023_julian_quin.ViewModels
 @model IndexTableroViewModel
 
-<h2>Lista de Tableros</h2>
+<h2>Tableros</h2>
+<nav  class="mb-4">
+    <ul class="list-unstyled"> 
+        <li  class="d-inline-block mr-2">
+            <a class="btn btn-success btn-lg" role="button" aria-pressed="true"asp-controller="Tablero" asp-action="NuevoTablero">Nuevo Tablero</a>
+        </li>
+         <li class="d-inline-block mr-2">
+            <a class="btn btn-success btn-lg" role="button" aria-pressed="true" asp-controller="Tarea" asp-action="Nuevatarea" asp-route-idTablero="">Crear Tareas</a>
+        </li>
+    </ul>
+</nav>
+
 <table class="table table-dark">
     <thead>
         <tr>
-            <th hidden>Id</th>
-            <th>Id Propietario</th>
             <th>Nombre</th>
             <th>Descripcion</th>
             <th></th>
@@ -17,13 +26,14 @@
         {
             <tr>
                 <td hidden>@tablero.Id</td>
-                <td>@tablero.IdUsuarioPropietario</td>
                 <td>@tablero.Nombre</td>
                 <td>@tablero.Descripcion</td>
                 <td>
-                    <a asp-controller="Tablero" asp-action="ModificarTablero" asp-route-idTablero ="@tablero.Id">Editar</a>    @*asp-route-idUsuario // permite mandar el id hacia el get de Modificar (ya que necesita del parametro idUsuario) y asi mostrar el formulario completo de acuerdo al usuario que se cliquee en la tabla de momento para modificar*@
-                    <a asp-controller="Tablero" asp-action="EliminarTablero" asp-route-idTablero="@tablero.Id" onclick="return confirm('¿Estas seguro que quieres eliminar el elemento?')">Eliminar</a>
-                    <a asp-controller="Tarea" asp-action="Index" asp-route-idTablero ="@tablero.Id" >Ver Tareas</a>
+                    <a class="btn btn-secondary btn-sm" role="button" role="button" aria-pressed="true" asp-controller="Tablero" asp-action="ModificarTablero" asp-route-idTablero="@tablero.Id">Editar</a> @*manda al get*@
+                
+                    <a class="btn btn-secondary btn-sm" role="button" role="button" aria-pressed="true" asp-controller="Tablero" asp-action="EliminarTablero" asp-route-idTablero="@tablero.Id" onclick="return confirm('¿Estas seguro que quieres eliminar el elemento?')">Eliminar</a>
+
+                    <a class="btn btn-secondary btn-sm" role="button" role="button" aria-pressed="true" asp-controller="Tarea" asp-action="Index" asp-route-idTablero="@tablero.Id">Tareas</a>
                 </td>
             </tr>
         }

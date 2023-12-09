@@ -3,7 +3,13 @@ using System.Data.SQLite;
 namespace tl2_tp10_2023_julian_quin;
 public class TableroRepository:ITableroRepository
 {
-    private string cadenaConexion = "Data Source=DB/Kanban.db;Cache=Shared";
+    private string cadenaConexion;
+
+    public TableroRepository(string CadenaDeConexion)
+    {
+        this.cadenaConexion = CadenaDeConexion;
+    }
+
     public Tablero NuevoTablero(Tablero tablero)
     {
         var query = "INSERT INTO Tablero (id_usuario_propietario, nombre, descripcion) VALUES (@idProp,@nombre,@descripcion)";
@@ -60,6 +66,7 @@ public class TableroRepository:ITableroRepository
                 }
             }
         }
+        if (tablero == null) throw new Exception("Tablero No encontrado");
         return tablero;
 
     }
