@@ -4,10 +4,10 @@ using System.Linq.Expressions;
 namespace tl2_tp10_2023_julian_quin;
 public class TareasRepository:ITareasRepository
 {
-    private readonly string cadenaConexion;
+    private readonly string _cadenaConexion;
     public TareasRepository(string CadenaDeConexion)
     {
-        this.cadenaConexion = CadenaDeConexion;
+        _cadenaConexion = CadenaDeConexion;
     }
     
 
@@ -15,7 +15,7 @@ public class TareasRepository:ITareasRepository
     public Tarea CrearTarea(int idTablero, Tarea tarea)
     {
         var query = "INSERT INTO Tarea (id_tablero,nombre,descripcion,color,id_usuario_asignado,estado) VALUES (@idTablero,@nombre,@descripcion,@color,@idU,@estado)";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
         {
 
             var command = new SQLiteCommand(query, connection);
@@ -35,7 +35,7 @@ public class TareasRepository:ITareasRepository
     public void ModificarTarea(int id, Tarea tarea)
     {
         var query = "UPDATE Tarea SET id_tablero = @idTab, nombre = @nombre, descripcion = @descripcion ,color = @color, id_usuario_asignado = @idU, estado = @estado WHERE id = @id";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
@@ -56,7 +56,7 @@ public class TareasRepository:ITareasRepository
     {   
         var queryString = @"SELECT * FROM Tarea WHERE id = @id;";
         Tarea tarea = null;
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
         {
             SQLiteCommand command = new SQLiteCommand(queryString, connection);
             connection.Open();
@@ -91,7 +91,7 @@ public class TareasRepository:ITareasRepository
       
         List<Tarea> tareas = new();
         Tarea tarea;
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion) )
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion) )
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
@@ -123,7 +123,7 @@ public class TareasRepository:ITareasRepository
         string query = "SELECT * FROM Tarea WHERE id_tablero = @idUsuario";
         List<Tarea> tareas = new();
         Tarea tarea;
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion) )
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion) )
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
@@ -152,7 +152,7 @@ public class TareasRepository:ITareasRepository
     {
         var query = "DELETE FROM Tarea WHERE id = @idTarea";
 
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
         {
             connection.Open();
             SQLiteCommand command = new SQLiteCommand(query,connection);
@@ -166,7 +166,7 @@ public class TareasRepository:ITareasRepository
     public void AsignarTarea(int idUsuario, int idTarea)
     {
         var query = "UPDATE Tarea set  id_usuario_asignado = @usuarioAsignado   WHERE id = @idTarea";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);

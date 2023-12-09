@@ -6,86 +6,142 @@ namespace tl2_tp10_2023_julian_quin.Controllers;
 public class TableroController : Controller
 {
     private readonly ILogger<TableroController> _logger;
-    private readonly ITableroRepository accesoTableros;
-    private readonly IUsuarioRepository accesoUsuarios;
+    private readonly ITableroRepository _accesoTableros;
+    private readonly IUsuarioRepository _accesoUsuarios;
 
     public TableroController(ILogger<TableroController> logger, ITableroRepository tableroRepository, IUsuarioRepository usuarioRepository)
     {
         _logger = logger;
-        this.accesoTableros = tableroRepository;
-        this.accesoUsuarios = usuarioRepository;
+        _accesoTableros = tableroRepository;
+        _accesoUsuarios = usuarioRepository;
     }
     [HttpGet]
     public IActionResult Index()
     {
-        if(!SeLogueo()) return RedirectToRoute (new { controller = "Login", action = "Index" });
-        else if(EsAdmin())return View(new IndexTableroViewModel(accesoTableros.Tableros()));
-        var idUsuario =  (int)HttpContext.Session.GetInt32("Id");
-        var tableros = accesoTableros.TablerosDeUnUsuario(idUsuario);
-        return View(new IndexTableroViewModel(tableros));
+        try
+        {
+            if (!SeLogueo()) return RedirectToRoute(new { controller = "Login", action = "Index" });
+            else if (EsAdmin()) return View(new IndexTableroViewModel(_accesoTableros.Tableros()));
+            var idUsuario = (int)HttpContext.Session.GetInt32("Id");
+            var tableros = _accesoTableros.TablerosDeUnUsuario(idUsuario);
+            return View(new IndexTableroViewModel(tableros));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return BadRequest();
+        }
+
     }
 
     [HttpGet]
     public IActionResult NuevoTablero()
     {
-        if(!SeLogueo()) return RedirectToRoute (new { controller = "Home", action = "Index" });
-        if(!EsAdmin()) return RedirectToAction("Index");
-        var nuevoTablero = new CrearTableroViewModel();
-        nuevoTablero.usuarios = accesoUsuarios.Usuarios();
-        return View(nuevoTablero);
+        try
+        {
+            if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
+            if (!EsAdmin()) return RedirectToAction("Index");
+            var nuevoTablero = new CrearTableroViewModel();
+            nuevoTablero.usuarios = _accesoUsuarios.Usuarios();
+            return View(nuevoTablero);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return BadRequest();
+        }
+
     }
-    
+
     [HttpPost]
     public IActionResult NuevoTablero(CrearTableroViewModel tablero)
     {
-        if(!SeLogueo()) return RedirectToRoute (new { controller = "Home", action = "Index" });
-        if(!EsAdmin()) return RedirectToAction("Index");
-        if(!ModelState.IsValid) return RedirectToAction("Index");
-        var nuevotablero = new Tablero(tablero);
-        accesoTableros.NuevoTablero(nuevotablero);
-        return RedirectToAction("Index");
+        try
+        {
+            if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
+            if (!EsAdmin()) return RedirectToAction("Index");
+            if (!ModelState.IsValid) return RedirectToAction("Index");
+            var nuevotablero = new Tablero(tablero);
+            _accesoTableros.NuevoTablero(nuevotablero);
+            return RedirectToAction("Index");
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return BadRequest();
+        }
+
     }
 
     [HttpGet]
     public IActionResult ModificarTablero(int idTablero)
     {
-        if(!SeLogueo()) return RedirectToRoute (new { controller = "Home", action = "Index" });
-        if(!EsAdmin()) return RedirectToAction("Index");
-        var tablero = accesoTableros.TableroViaId(idTablero);
-        var usuarios = accesoUsuarios.Usuarios();
-        var tareaAmodificadar = new ModificarTableroViewModel(tablero);
-        tareaAmodificadar.Usuarios = usuarios;
-        return View(tareaAmodificadar);
+        try
+        {
+            if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
+            if (!EsAdmin()) return RedirectToAction("Index");
+            var tablero = _accesoTableros.TableroViaId(idTablero);
+            var usuarios = _accesoUsuarios.Usuarios();
+            var tareaAmodificadar = new ModificarTableroViewModel(tablero);
+            tareaAmodificadar.Usuarios = usuarios;
+            return View(tareaAmodificadar);
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return BadRequest();
+        }
     }
 
     [HttpPost]
     public IActionResult ModificarTablero(ModificarTableroViewModel tablero)
     {
-        if(!SeLogueo()) return RedirectToRoute (new { controller = "Home", action = "Index" });
-        if(!ModelState.IsValid) return RedirectToAction("Index");
-        var tableroModificaciones = new Tablero(tablero);
-        accesoTableros.ModificarTablero(tableroModificaciones,tableroModificaciones.Id);
-        return RedirectToAction("Index");
+        try
+        {
+            if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
+            if (!ModelState.IsValid) return RedirectToAction("Index");
+            var tableroModificaciones = new Tablero(tablero);
+            _accesoTableros.ModificarTablero(tableroModificaciones, tableroModificaciones.Id);
+            return RedirectToAction("Index");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return BadRequest();
+        }
+
     }
     public IActionResult EliminarTablero(int idTablero)
     {
-        if(!SeLogueo()) return RedirectToRoute (new { controller = "Home", action = "Index" });
-        if(!EsAdmin()) return RedirectToAction("Index");
-        accesoTableros.EliminarTablero(idTablero);
-        return RedirectToAction("Index");
+        try
+        {
+            if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
+            if (!EsAdmin()) return RedirectToAction("Index");
+            _accesoTableros.EliminarTablero(idTablero);
+            return RedirectToAction("Index");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return BadRequest();
+        }
+
+
     }
     private bool EsAdmin()
     {
         if (HttpContext.Session != null && HttpContext.Session.GetString("NivelAcceso") == "administrador") return true;
         return false;
-    }  
+    }
 
     private bool SeLogueo()
     {
-        if(HttpContext.Session.GetString("Usuario") != null && HttpContext.Session.GetInt32("Id") != null 
+        if (HttpContext.Session.GetString("Usuario") != null && HttpContext.Session.GetInt32("Id") != null
         && HttpContext.Session.GetString("NivelAcceso") != null) return true;
-        return false; 
+        return false;
     }
- 
+
 
 }

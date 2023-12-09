@@ -3,17 +3,17 @@ using System.Data.SQLite;
 namespace tl2_tp10_2023_julian_quin;
 public class TableroRepository:ITableroRepository
 {
-    private string cadenaConexion;
+    private readonly string _cadenaConexion;
 
     public TableroRepository(string CadenaDeConexion)
     {
-        this.cadenaConexion = CadenaDeConexion;
+        _cadenaConexion = CadenaDeConexion;
     }
 
     public Tablero NuevoTablero(Tablero tablero)
     {
         var query = "INSERT INTO Tablero (id_usuario_propietario, nombre, descripcion) VALUES (@idProp,@nombre,@descripcion)";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
         {
 
             var command = new SQLiteCommand(query, connection);
@@ -30,7 +30,7 @@ public class TableroRepository:ITableroRepository
     public void ModificarTablero(Tablero tablero, int id)
     {
         var query = "UPDATE Tablero SET id_usuario_propietario = @id_usu_pt, nombre = @nombre, descripcion = @descripcion WHERE id = @id";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
@@ -49,7 +49,7 @@ public class TableroRepository:ITableroRepository
     {
         string query = "SELECT * FROM Tablero WHERE id = @id";
         Tablero tablero=null;
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion) )
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion) )
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
@@ -75,7 +75,7 @@ public class TableroRepository:ITableroRepository
         string query = "SELECT * FROM Tablero";
         List<Tablero> tableros = new();
         Tablero tablero;
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion) )
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion) )
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
@@ -103,7 +103,7 @@ public class TableroRepository:ITableroRepository
         // string query = "SELECT Tablero.id, Tablero.nombre, Tablero.descripcion,Tablero.id_usuario_propietario, Usuario.nombre_de_usuario FROM Tablero JOIN Usuario ON Tablero.id_usuario_propietario = Usuario.id WHERE id_usuario_propietario = @idUsuario";
         List<Tablero> tableros = new();
         Tablero tablero;
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion) )
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion) )
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
@@ -130,7 +130,7 @@ public class TableroRepository:ITableroRepository
     {
         var query = "DELETE FROM Tablero WHERE id = @id";
 
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
         {
             connection.Open();
             SQLiteCommand command = new SQLiteCommand(query,connection);

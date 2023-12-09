@@ -5,10 +5,10 @@
 @*usamos la sintaxis Razor para definir código C# en la vista*@
 
 <h2>Usuarios</h2>
-<nav>
-    <ul>  
-        <li>
-            <a class="btn btn-success btn-lg active" role="button" aria-pressed="true" asp-controller="Usuario" asp-action="NuevoUsuario">Nuevo Usuario</a>
+<nav class="mb-4">
+    <ul class="list-unstyled">  
+        <li  class="d-inline-block">
+            <a class="btn btn-dark active" role="button" aria-pressed="true" asp-controller="Usuario" asp-action="NuevoUsuario">Nuevo Usuario</a>
         </li>
     </ul>
 </nav>
@@ -26,12 +26,12 @@
         @foreach (var usuario in Model.usuarios)
         {
             <tr>
-                <td class="bg-primary"> @usuario.Id</td> 
-                <td class="bg-primary">@usuario.NombreDeUsuario</td>
-                <td  class="bg-success">@usuario.Rol</td>
-                <td class="bg-info">
-                    <a asp-controller="Usuario" asp-action="ModificarUsuario" asp-route-idUsuario ="@usuario.Id">Editar</a> 
-                    <a asp-controller="Usuario" asp-action="EliminarUsuario" asp-route-idUsuario="@usuario.Id" onclick="return confirm('¿Estas seguro que quieres eliminar el elemento?')">Eliminar</a>
+                <td class="bg-success"> @usuario.Id</td> 
+                <td class="bg-success">@usuario.NombreDeUsuario</td>
+                <td class="bg-success">@usuario.Rol</td>
+                <td class="bg-success">
+                    <a class="btn btn-light btn-sm" role="button"  asp-controller="Usuario" asp-action="ModificarUsuario" asp-route-idUsuario ="@usuario.Id">Editar</a> 
+                    <a class="btn btn-light btn-sm" role="button" asp-controller="Usuario" asp-action="EliminarUsuario" asp-route-idUsuario="@usuario.Id" onclick="return confirm('¿Estas seguro que quieres eliminar el elemento?')">Eliminar</a>
                 </td>
             </tr>
         }

@@ -4,11 +4,11 @@ using System.Data.SQLite;
 namespace tl2_tp10_2023_julian_quin;
 public class UsuarioRepository : IUsuarioRepository
 {
-    private readonly string cadenaConexion;
+    private readonly string _cadenaConexion;
 
     public UsuarioRepository(string CadenaDeConexion)
     {
-        this.cadenaConexion = CadenaDeConexion;
+        _cadenaConexion = CadenaDeConexion;
     }
     public UsuarioRepository(){}
 
@@ -17,7 +17,7 @@ public class UsuarioRepository : IUsuarioRepository
 
         var queryString = @"SELECT * FROM Usuario;";
         List<Usuario> usuarios = new List<Usuario>();
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
         {
             SQLiteCommand command = new SQLiteCommand(queryString, connection);
             connection.Open();
@@ -42,7 +42,7 @@ public class UsuarioRepository : IUsuarioRepository
     public void NuevoUsuario(Usuario usuario)
     {
         var query = $"INSERT INTO Usuario (nombre_de_usuario,rol,pass) VALUES (@name,@rol,@pass)";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
         {
 
             connection.Open();
@@ -61,7 +61,7 @@ public class UsuarioRepository : IUsuarioRepository
 
         var queryString = @"SELECT * FROM Usuario WHERE id = @id;";
         Usuario usuario = null;
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
         {
             SQLiteCommand command = new SQLiteCommand(queryString, connection);
             connection.Open();
@@ -90,7 +90,7 @@ public class UsuarioRepository : IUsuarioRepository
         var query = "DELETE FROM Usuario WHERE id = @id"; // si no encuentra el id no se rompe el codigo
         bool flag = false;
 
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
         {
             connection.Open();
             SQLiteCommand command = new SQLiteCommand(query,connection);
@@ -107,7 +107,7 @@ public class UsuarioRepository : IUsuarioRepository
 
         var query = "UPDATE Usuario SET nombre_de_usuario = @name, rol = @rol, pass = @password WHERE id = @id";
         bool flag = false;
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
@@ -125,7 +125,7 @@ public class UsuarioRepository : IUsuarioRepository
     {
         var queryString = @"SELECT * FROM Usuario Where pass = @contrasenia AND nombre_de_usuario = @nombreUsuario;";
         Usuario usuario = null;
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
         {
             SQLiteCommand command = new SQLiteCommand(queryString, connection);
             connection.Open();
