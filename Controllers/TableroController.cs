@@ -21,7 +21,7 @@ public class TableroController : Controller
         try
         {
             if (!SeLogueo()) return RedirectToRoute(new { controller = "Login", action = "Index" });
-            else if (EsAdmin()) return View(new IndexTableroViewModel(_accesoTableros.Tableros()));
+            if (EsAdmin()) return View(new IndexTableroViewModel(_accesoTableros.Tableros()));
             var idUsuario = (int)HttpContext.Session.GetInt32("Id");
             var tableros = _accesoTableros.TablerosDeUnUsuario(idUsuario);
             return View(new IndexTableroViewModel(tableros));
@@ -40,7 +40,7 @@ public class TableroController : Controller
         try
         {
             if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
-            if (!EsAdmin()) return RedirectToAction("Index");
+            if (!EsAdmin()) return View("MensajeAdvertencia");
             var nuevoTablero = new CrearTableroViewModel();
             nuevoTablero.usuarios = _accesoUsuarios.Usuarios();
             return View(nuevoTablero);
@@ -80,7 +80,7 @@ public class TableroController : Controller
         try
         {
             if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
-            if (!EsAdmin()) return RedirectToAction("Index");
+            if (!EsAdmin()) return View("MensajeAdvertencia");
             var tablero = _accesoTableros.TableroViaId(idTablero);
             var usuarios = _accesoUsuarios.Usuarios();
             var tareaAmodificadar = new ModificarTableroViewModel(tablero);
@@ -118,7 +118,7 @@ public class TableroController : Controller
         try
         {
             if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
-            if (!EsAdmin()) return RedirectToAction("Index");
+            if (!EsAdmin()) return View("MensajeAdvertencia");
             _accesoTableros.EliminarTablero(idTablero);
             return RedirectToAction("Index");
         }
