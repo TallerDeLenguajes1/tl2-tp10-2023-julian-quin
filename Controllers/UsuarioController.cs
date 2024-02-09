@@ -18,7 +18,7 @@ public class UsuarioController : Controller
     public IActionResult Index()
     { 
         if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
-        else if(!EsAdmin()) return NotFound("ERROR 404 usted no es un usuario Administrador");
+        if(!EsAdmin()) return View("MensajeAdvertencia");
         var usuarios = accesoUsuarios.Usuarios();
         var usuariosView = new IndexUsuarioViewModel(usuarios);
         return View(usuariosView);
@@ -28,7 +28,7 @@ public class UsuarioController : Controller
     public IActionResult NuevoUsuario()
     {
         if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
-        else if(!EsAdmin())return NotFound("ERROR 404 usted no es un usuario Administrador");
+        if(!EsAdmin())return View("MensajeAdvertencia");
         return View(new CrearUsuarioViewModel());
     }
 
@@ -36,7 +36,7 @@ public class UsuarioController : Controller
     public IActionResult NuevoUsuario(CrearUsuarioViewModel usuario)
     {
         if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
-        if(!EsAdmin())return NotFound("ERROR 404 usted no es un usuario Administrador") ;
+        if(!EsAdmin()) return View("MensajeAdvertencia");
         if(!ModelState.IsValid) return RedirectToAction("Index");
         var nuevoUsuario = new Usuario(usuario);
         accesoUsuarios.NuevoUsuario(nuevoUsuario);
@@ -47,7 +47,7 @@ public class UsuarioController : Controller
     public IActionResult ModificarUsuario(int idUsuario)
     {
         if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
-        else if(!EsAdmin())return NotFound("ERROR 404 usted no es un usuario Administrador");
+        if(!EsAdmin())return View("MensajeAdvertencia");
         var usuario = accesoUsuarios.UsuarioViaId(idUsuario);
         var usuarioViewModel = new ModificarUsuarioViewModel(usuario);
         return View(usuarioViewModel);
@@ -57,7 +57,7 @@ public class UsuarioController : Controller
     public IActionResult ModificarUsuario(ModificarUsuarioViewModel usuarioUp)
     {
         if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
-        if(!EsAdmin())return NotFound("ERROR 404 usted no es un usuario Administrador");
+        if(!EsAdmin())return View("MensajeAdvertencia");
         if(!ModelState.IsValid) return RedirectToAction("Index");
         var usuario = new Usuario(usuarioUp);
         accesoUsuarios.ActualizarUsuario(usuario, usuario.Id);
@@ -67,7 +67,7 @@ public class UsuarioController : Controller
     public IActionResult EliminarUsuario(int idUsuario)
     {
         if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
-        if(!EsAdmin())return NotFound("ERROR 404 usted no es un usuario Administrador");
+        if(!EsAdmin())return View("MensajeAdvertencia");
         if(!EsAdmin())return RedirectToAction("Index");
         accesoUsuarios.EliminarUsuario(idUsuario);
         return RedirectToAction("Index");
