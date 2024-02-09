@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+8jTWeuYhFzCcKRuRdXVrnuVk6WcXay6HZb6+TGx+WvwRUNFYg2beX4cUozikWKA+HDZqJleOoZwPQExU35bKQ==",
+  "dgSpecHash": "GaR2f7Vb8glOfKh4FPhyhNxFwdarzrYl8Q5z31SUbn7pj448XWN5upV7fxWcXRfglrodArNdoJ91N6+Qym7I8A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\tl2-tp10-2023-julian-quin.csproj",
+  "projectFilePath": "C:\\Users\\julio\\Desktop\\taller2\\TP_Realizados\\tl2-tp10-2023-julian-quin\\tl2-tp10-2023-julian-quin.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\julio\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\julio\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\2.2.0\\microsoft.aspnetcore.cryptography.internal.2.2.0.nupkg.sha512",

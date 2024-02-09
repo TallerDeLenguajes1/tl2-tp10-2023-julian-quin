@@ -6,6 +6,7 @@ public class TareaViewModel
     public string Descripcion  { get; set;}
     public string Color  { get; set;}
     public EstadoTarea Estado  { get; set;}
+    public string NombreEncargado  { get; set;}  
 
     public TareaViewModel(Tarea tarea)
     {

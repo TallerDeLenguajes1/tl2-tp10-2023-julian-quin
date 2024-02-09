@@ -34,7 +34,7 @@ public class ModificarTableroViewModel
     }
     public ModificarTableroViewModel(){}
   // public int IdUsuarioPropietario { get; set; } si no pusiese este campo, cuando cree una instancia de esta clase voy a perder el datos del idPropietario que llega al constructor por medio del objeto Tablero,
-  //luego cuando quiero convertir este objeto desde la clase Tablero el campo idUsuarioPropietario cerá cero, pues se pondrá por defecto reemplazando el que ya tenia
+  //luego cuando quiero convertir este objeto desde la clase Tablero el campo idUsuarioPropietario será cero, pues se pondrá por defecto reemplazando el que ya tenia
     
     
 }
