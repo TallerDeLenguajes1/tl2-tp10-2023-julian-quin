@@ -115,7 +115,7 @@ public class TareaController : Controller
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex.ToString());
+            _logger.LogError("Error al intentar modificar " + ex.ToString());
             return BadRequest();
         }
     }
@@ -134,7 +134,7 @@ public class TareaController : Controller
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex.ToString());
+            _logger.LogError("Error al intentar modificar " + ex.ToString());
             return BadRequest();
         }
     }
