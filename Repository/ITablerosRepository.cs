@@ -7,4 +7,6 @@ public interface ITableroRepository
     List<Tablero> Tableros();
     List<Tablero> TablerosDeUnUsuario(int? idUsuario);
     void EliminarTablero(int id);
+    public List<Tablero> TablerosTareasUsuario(int idUsuario);
+    bool ExistenTareasEnTablero(int idTablero);
 }
