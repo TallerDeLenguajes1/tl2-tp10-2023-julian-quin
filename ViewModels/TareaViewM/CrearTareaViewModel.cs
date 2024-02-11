@@ -18,6 +18,7 @@ public class CrearTareaViewModel
 
 
     public int? IdUsuarioAsignado  { get; set;}
+    public int? NombreUsuarioAsignado  { get; set;}
     public string Descripcion  { get; set;}
     public string Color  { get; set;}
     public List<Tablero> Tableros;
