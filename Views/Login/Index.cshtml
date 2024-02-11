@@ -1,4 +1,4 @@
-@using tl2_tp10_2023_julian_quin.ViewModels
+@* @using tl2_tp10_2023_julian_quin.ViewModels
 @model LoginViewModel 
 <h2>Iniciar Sesión</h2>
 <form asp-controller="Login" asp-action="Login" method="post">
@@ -16,5 +16,46 @@
     <button type="submit" class="btn btn-success">Iniciar</button>
 </form>
 
-@section Scripts { <partial name="_ValidationScriptsPartial" /> } @*para que el formulario valide los datos – En el Front End*@
+@section Scripts { <partial name="_ValidationScriptsPartial" /> } *@
+@using tl2_tp10_2023_julian_quin.ViewModels
+@model LoginViewModel
 
+@if(Model.Mensaje!=null)
+{
+    <p><strong>@Model.Mensaje</strong></p>
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <section class="card" style="background-color: #f8f9fa; border: 2px solid #d6d8db; border-radius: 10px;">
+                <section class="card-header" style="background-color: #cce5ff; border-bottom: 2px solid #b3d7ff; border-radius: 8px 8px 0 0;">
+                    <h2 class="text-center" style="color: #004085; font-family: 'Arial', sans-serif;">Iniciar Sesión</h2>
+                </section>
+                <div class="card-body">
+                    <form asp-controller="Login" asp-action="Login" method="post">
+                        <div class="form-group">
+                            <label asp-for="@Model.Nombre" class="font-weight-bold" style="color: #0056b3; font-family: 'Arial', sans-serif;">Nombre de Usuario:</label>
+                            <input asp-for="@Model.Nombre" class="form-control" style="border: 1px solid #b3b3b3; border-radius: 5px;" />
+                            <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="@Model.Contrasenia" class="font-weight-bold" style="color: #0056b3; font-family: 'Arial', sans-serif;">Contraseña:</label>
+                            <input asp-for="@Model.Contrasenia" class="form-control" type="password" style="border: 1px solid #b3b3b3; border-radius: 5px;" />
+                            <span asp-validation-for="@Model.Contrasenia" class="text-danger"></span>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success" style="background-color: #5cb85c; border: 1px solid #4cae4c; border-radius: 5px; color: #fff; font-family: 'Arial', sans-serif;">Iniciar Sesión</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
