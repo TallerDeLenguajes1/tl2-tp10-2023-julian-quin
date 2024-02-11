@@ -19,7 +19,6 @@ html {
 
 body {
   margin-bottom: 60px;
-  background-color: rgb(209, 209, 209)
 }
 form {
   width: 40%;
@@ -28,13 +27,13 @@ form {
 label {
   margin-bottom: 10px;
 }
-input {
+input{
   margin-bottom: 10px;
-  border: 0.3px solid rgb(138, 137, 137) !important;
+  border: 0.3px solid rgb(209, 209, 209) !important;
 }
 select {
   margin-bottom: 10px;
-  border: 0.3px solid rgb(138, 137, 137) !important;
+  border: 0.3px solid rgb(209, 209, 209) !important;
 }
 h2 {
   text-align: center;
@@ -57,4 +56,43 @@ td
 }
 th {
   text-align: center;
+}
+table {
+  border: solid 2px black !important;
+}
+table td,th {
+  border: none;
+}
+.forms_Crear
+{
+  border: rgb(209, 209, 209) 3px solid !important;
+  border-radius: 15px !important;
+  padding: 2% !important;
+}
+
+.forms_Modificar{
+  border: rgb(209, 209, 209) 3px solid !important;
+  border-radius: 15px !important;
+  padding: 2% !important;
+}
+.formulario-personalizado {
+  display: flex;
+  align-items: center; /* Alinea verticalmente los elementos */
+}
+
+.formulario-personalizado select,
+.formulario-personalizado input[type="submit"],
+.formulario-personalizado a.btn {
+  margin-right: 10px; /* Agrega espacio entre los elementos */
+}
+.formulario-personalizado select
+{
+  border-radius: 5px;
+}
+.formulario-personalizado input
+{
+  border-radius: 5px;
+  background: rgb(98, 143, 31);
+  color:rgb(255, 255, 255);
+  border: solid black 2px;
 }
