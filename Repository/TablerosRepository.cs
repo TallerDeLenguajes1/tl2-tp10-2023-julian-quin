@@ -117,7 +117,33 @@ public class TableroRepository:ITableroRepository
                     tablero.Nombre = reader["nombre"].ToString();
                     tablero.Descripcion = reader["descripcion"].ToString();
                     tablero.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
-                    //tablero.NombreUsuarioPropietario =reader["nombre_de_usuario"].ToString();
+                    tableros.Add(tablero);
+                }
+            }
+        }
+        return tableros;
+
+    }
+
+    public List<Tablero> TablerosTareasUsuario(int idUsuario)
+    {
+        string query ="SELECT DISTINCT tablero.* FROM tablero JOIN Tarea ON tablero.id = tarea.id_tablero WHERE tarea.id_usuario_asignado = @idUsuario AND tablero.id_usuario_propietario != @idUsuario;";
+        List<Tablero> tableros = new();
+        Tablero tablero;
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion) )
+        {
+            connection.Open();
+            var command = new SQLiteCommand(query, connection);
+            command.Parameters.Add(new SQLiteParameter("@idUsuario",idUsuario));
+            using (SQLiteDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    tablero = new();
+                    tablero.Id = Convert.ToInt32(reader["id"]);
+                    tablero.Nombre = reader["nombre"].ToString();
+                    tablero.Descripcion = reader["descripcion"].ToString();
+                    tablero.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
                     tableros.Add(tablero);
                 }
             }
@@ -139,6 +165,21 @@ public class TableroRepository:ITableroRepository
             connection.Close();
 
         }
+    }
+    public bool ExistenTareasEnTablero(int idTablero)
+    {
+        string query = "SELECT COUNT (id) FROM Tarea WHERE id_tablero = @idTablero;";
+        int respuesta;
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
+        {
+            connection.Open();
+            var command = new SQLiteCommand(query, connection);
+            command.Parameters.Add(new SQLiteParameter("@idTablero",idTablero));
+            respuesta = Convert.ToInt32(command.ExecuteScalar());
+            connection.Close();
+        }
+        return respuesta > 0;
+
     }
     
 
