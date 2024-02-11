@@ -16,6 +16,7 @@ public class Tarea
     private string descripcion;
     private string color;
     private int? idUsuarioAsignado;
+    public string NombreUsuarioAsignado {get;set;}
     private EstadoTarea estado;
 
     public int Id { get => id; set => id = value; }
@@ -32,7 +33,7 @@ public class Tarea
         Color = tarea.Color;
         Estado = tarea.Estado;
         IdUsuarioAsignado = tarea.IdUsuarioAsignado;
-        idTablero = tarea.IdTablero;
+        idTablero = tarea.IdTablero; 
     }
     public Tarea(ModificarTareaViewModel tarea )
     {
@@ -44,6 +45,5 @@ public class Tarea
         IdUsuarioAsignado = tarea.IdUsuarioAsignado;
         idTablero = tarea.IdTablero;
     }
-
     public Tarea (){}
 }
