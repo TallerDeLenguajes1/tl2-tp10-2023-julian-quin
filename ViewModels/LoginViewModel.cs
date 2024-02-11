@@ -2,7 +2,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 namespace tl2_tp10_2023_julian_quin.ViewModels;
 
-    public class LoginViewModel// vendria siendo como usuarioviewModel
+    public class LoginViewModel
     {
         [Required(ErrorMessage = "Se requiere este campo")]
         [Display(Name = "Nombre de Usuario")] 
@@ -12,4 +12,5 @@ namespace tl2_tp10_2023_julian_quin.ViewModels;
         [PasswordPropertyText]
         [Display(Name = "Contraseña")]
         public string Contrasenia {get;set;}
+        public string Mensaje {get;set;}
     }
