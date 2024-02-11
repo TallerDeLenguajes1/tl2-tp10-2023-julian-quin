@@ -68,7 +68,6 @@ public class UsuarioController : Controller
     {
         if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
         if(!EsAdmin())return View("MensajeAdvertencia");
-        if(!EsAdmin())return RedirectToAction("Index");
         accesoUsuarios.EliminarUsuario(idUsuario);
         return RedirectToAction("Index");
     }
