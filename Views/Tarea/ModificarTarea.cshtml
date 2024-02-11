@@ -2,7 +2,7 @@
 @model ModificarTareaViewModel
 <h2>Modificar Tarea</h2>
 
-<form asp-controller="Tarea" asp-action ="ModificarTarea"> 
+<form class="forms_Modificar" asp-controller="Tarea" asp-action ="ModificarTarea"> 
     <input hidden asp-for="@Model.Id"> @*si borro esto, sucede que al endpoint [post] no llega el id, y si lo dejo y no pongo el hidden lo expongo*@
     <input hidden asp-for="@Model.IdUsuarioAsignado">
      <div class="form-group">
@@ -33,7 +33,12 @@
     </div>
     <div class="form-group">
         <label asp-for="@Model.Estado">Estado</label>
-        <input asp-for="@Model.Estado" class="form-control" />
+        <select asp-for="@Model.Estado" class="form-control">
+            @foreach (var tipo in Enum.GetValues(typeof(EstadoTarea)))
+            {
+                <option value="@tipo">@tipo</option>
+            }
+        </select>
         <span asp-validation-for="@Model.Estado" class="text-danger"></span>
     </div>
   

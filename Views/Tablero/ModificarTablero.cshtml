@@ -1,7 +1,7 @@
 @using tl2_tp10_2023_julian_quin.ViewModels
 @model ModificarTableroViewModel
 <h2>Modificar Tablero</h2>
-<form asp-controller="Tablero" asp-action ="ModificarTablero"> 
+<form class="forms_Modificar" asp-controller="Tablero" asp-action ="ModificarTablero"> 
     <input hidden asp-for="@Model.Id">
     <div class="form-group">
         <label asp-for="@Model.IdUsuarioPropietario">Propietario</label>@*muestra el nombre*@

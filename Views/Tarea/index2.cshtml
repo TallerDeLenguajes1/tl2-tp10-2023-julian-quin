@@ -1,0 +1,49 @@
+@using tl2_tp10_2023_julian_quin.ViewModels
+@model IndexTareaViewModel
+
+<h2>Lista de Tareas</h2>
+<nav class="mb-4">
+    <ul class="list-unstyled">
+        <li class="d-inline-block">
+            <a class="btn btn-secondary" role="button" aria-pressed="true" asp-controller="Tablero" asp-action="Index"
+                style="color: rgb(255, 255, 255);">Volver</a>
+        </li>
+    </ul>
+</nav>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Propietario</th>
+            <th>Descripcion</th>
+            <th>Color</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tarea in Model.tareasView)
+        {
+            <tr class="table-secondary">
+                <td>@tarea.Nombre</td>
+                <td>@tarea.NombreEncargado</td>
+                <td>@tarea.Descripcion</td>
+                <td>@tarea.Color</td>
+                <td>@tarea.Estado</td>
+                <td>
+                    @if( ViewBag.idSession == tarea.IdUsuarioAsignado)
+                    {
+                        <form class ="formulario-personalizado" asp-controller="Tarea" asp-action="CambiarEstadoTarea">
+                            <select name="Estado" asp-items="@Html.GetEnumSelectList<EstadoTarea>()">
+                            </select>
+                            <input hidden name="idTarea" value="@tarea.Id">
+                            <input type="submit" value="Cambiar">
+                        </form>
+                    }
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>

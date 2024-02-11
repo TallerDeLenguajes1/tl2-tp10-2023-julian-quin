@@ -2,7 +2,7 @@
 @model CrearTareaViewModel
 <h2>Crear Tarea</h2>
 
-<form asp-controller="Tarea" asp-action ="NuevaTarea"> 
+<form class="forms_Crear" asp-controller="Tarea" asp-action ="NuevaTarea"> 
     
     <div class="form-group">
         <label asp-for="@Model.IdTablero">Tablero</label>
@@ -31,7 +31,12 @@
     </div>
     <div class="form-group">
         <label asp-for="@Model.Estado">Estado</label>
-        <input asp-for="@Model.Estado" class="form-control" />
+        <select asp-for="@Model.Estado" class="form-control">
+            @foreach (var tipo in Enum.GetValues(typeof(EstadoTarea)))
+            {
+                <option value="@tipo">@tipo</option>
+            }
+        </select>
         <span asp-validation-for="@Model.Estado" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-success">Crear</button>
