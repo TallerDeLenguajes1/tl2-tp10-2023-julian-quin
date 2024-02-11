@@ -128,10 +128,9 @@ public class UsuarioRepository : IUsuarioRepository
         using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
         {
             SQLiteCommand command = new SQLiteCommand(queryString, connection);
-            connection.Open();
             command.Parameters.Add(new SQLiteParameter("@contrasenia",contrasenia));
             command.Parameters.Add(new SQLiteParameter("@nombreUsuario",usser));
-
+            connection.Open();
             using (SQLiteDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -141,7 +140,6 @@ public class UsuarioRepository : IUsuarioRepository
                     usuario.Contrasenia = reader["pass"].ToString();
                     usuario.Id = Convert.ToInt32(reader["id"]);
                     usuario.Rol = (Rol)Convert.ToInt32(reader["rol"]);
-
                 }
             }
             connection.Close();
@@ -149,6 +147,22 @@ public class UsuarioRepository : IUsuarioRepository
         if(usuario==null) throw new Exception("Usuario No encontrado");
         return usuario;
 
+    }
+
+    public bool AutenticarUsuario(string nombreUsuario, string contrasenia)
+    {
+        string query = "SELECT COUNT (id) FROM Usuario WHERE nombre_de_usuario = @nombreUsuario and pass=@contrasenia;";
+        int respuesta;
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion))
+        {
+            connection.Open();
+            var command = new SQLiteCommand(query, connection);
+            command.Parameters.Add(new SQLiteParameter("@nombreUsuario",nombreUsuario));
+            command.Parameters.Add(new SQLiteParameter("@contrasenia",contrasenia));
+            respuesta = Convert.ToInt32(command.ExecuteScalar());
+            connection.Close();
+        }
+        return respuesta > 0;
     }
 
 
