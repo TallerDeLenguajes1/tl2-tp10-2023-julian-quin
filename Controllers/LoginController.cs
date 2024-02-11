@@ -6,11 +6,11 @@ public class LoginController : Controller
 {
 
     private readonly ILogger<LoginController> _logger;
-    private readonly IUsuarioRepository accesoUsuarios;
+    private readonly IUsuarioRepository _accesoUsuarios;
     public LoginController(ILogger<LoginController> logger, IUsuarioRepository usuarioRepository)
     {
         _logger = logger;
-        this.accesoUsuarios = usuarioRepository;
+        _accesoUsuarios = usuarioRepository;
     }
 
     public IActionResult Index()
@@ -23,16 +23,23 @@ public class LoginController : Controller
     {
         try
         {
-            var usuarioLogin = accesoUsuarios.Logueo(usuario.Contrasenia, usuario.Nombre);
-            logearUsuario(usuarioLogin);
-            _logger.LogInformation("Usuario " + usuarioLogin.NombreDeUsuario + " logueado correctamente");
+            var usuarioLogin = _accesoUsuarios.AutenticarUsuario(usuario.Nombre,usuario.Contrasenia);
+            if (usuarioLogin == false)
+            {
+                usuario.Mensaje = "Usuario o contraseña no valida";
+                DateTime fechaHora = DateTime.Now;
+                _logger.LogWarning("Intento de acceso invalido: Usuario: " + usuario.Nombre + " -- Clave ingresada: " + usuario.Contrasenia + " --fecha/hora : " + fechaHora.ToString());
+                return View("Index", usuario);   
+            }
+            var Usuario = _accesoUsuarios.Logueo(usuario.Contrasenia,usuario.Nombre);
+            logearUsuario(Usuario);
+            _logger.LogInformation("Usuario " + Usuario.NombreDeUsuario + " logueado correctamente");
             return RedirectToRoute(new { controller = "Home", action = "Index" });
         }
         catch (Exception Ex)
         {
-            _logger.LogError(Ex.ToString());
-            _logger.LogWarning("Intento de acceso invalido: Usuario: " + usuario.Nombre + " -- Clave ingresada: " + usuario.Contrasenia);
-            return RedirectToAction("Index");   
+            _logger.LogError("Error al intentar loguarse " + Ex.ToString());
+            return BadRequest();      
         }
 
     }
