@@ -7,5 +7,6 @@ public interface IUsuarioRepository
     Usuario UsuarioViaId(int id);
     bool EliminarUsuario(int id);
     Usuario Logueo(string contrasenia, string usser);
+    public bool AutenticarUsuario(string nombreUsuario, string contrasenia);
 
 }
