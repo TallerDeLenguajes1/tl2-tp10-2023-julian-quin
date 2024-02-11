@@ -87,15 +87,14 @@ public class TareasRepository:ITareasRepository
     //Listar todas las tareas asignadas a un usuario específico.(recibe un idUsuario devuelve un list de tareas)
     public List<Tarea> TareasDeUnUsuario(int idUsuario)
     {
-        string query = "SELECT * FROM Tarea WHERE id_usuario_asignado = @idUsuario";
-      
+       string query =  "SELECT Tarea.id, Tarea.id_tablero , Tarea.nombre, Tarea.descripcion, Tarea.color, Tarea.id_usuario_asignado, Tarea.estado, Usuario.nombre_de_usuario FROM Tarea LEFT JOIN usuario ON Usuario.id = Tarea.id_usuario_asignado WHERE Usuario.id = @idusuario";
         List<Tarea> tareas = new();
         Tarea tarea;
         using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion) )
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
-            command.Parameters.Add(new SQLiteParameter("@idUsuario",idUsuario));
+            command.Parameters.Add(new SQLiteParameter("@idusuario",idUsuario));
             using (SQLiteDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -109,6 +108,8 @@ public class TareasRepository:ITareasRepository
                     tarea.Id =  Convert.ToInt32(reader["id"]);
                     tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
                     tarea.Descripcion= reader["descripcion"].ToString();
+                    if(reader["id_usuario_asignado"] == DBNull.Value)tarea.NombreUsuarioAsignado="Sin asignar";
+                    else tarea.NombreUsuarioAsignado= reader["nombre_de_usuario"].ToString();
                     tareas.Add(tarea);
                 }
             }
@@ -120,14 +121,14 @@ public class TareasRepository:ITareasRepository
 
     public List<Tarea> TareasDeUnTablero(int idTablero)
     {
-        string query = "SELECT * FROM Tarea WHERE id_tablero = @idUsuario";
+        string query = "SELECT Tarea.id, Tarea.id_tablero , Tarea.nombre, Tarea.descripcion, Tarea.color, Tarea.id_usuario_asignado, Tarea.estado, Usuario.nombre_de_usuario FROM Tarea LEFT JOIN usuario ON Usuario.id = Tarea.id_usuario_asignado WHERE Tarea.id_tablero = @idTablero";
         List<Tarea> tareas = new();
         Tarea tarea;
         using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion) )
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
-            command.Parameters.Add(new SQLiteParameter("@idUsuario",idTablero));
+            command.Parameters.Add(new SQLiteParameter("@idTablero",idTablero));
             using (SQLiteDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -141,6 +142,8 @@ public class TareasRepository:ITareasRepository
                     tarea.Id =  Convert.ToInt32(reader["id"]);
                     tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
                     tarea.Descripcion= reader["descripcion"].ToString();
+                    if(reader["id_usuario_asignado"] == DBNull.Value)tarea.NombreUsuarioAsignado="Sin asignar";
+                    else tarea.NombreUsuarioAsignado= reader["nombre_de_usuario"].ToString();
                     tareas.Add(tarea);
                 }
             }
