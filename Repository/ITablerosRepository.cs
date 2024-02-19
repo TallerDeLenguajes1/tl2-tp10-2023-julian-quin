@@ -9,4 +9,5 @@ public interface ITableroRepository
     void EliminarTablero(int id);
     public List<Tablero> TablerosTareasUsuario(int idUsuario);
     bool ExistenTareasEnTablero(int idTablero);
+    public List<Tablero> TablerosRestantes(int idUsuario);
 }
