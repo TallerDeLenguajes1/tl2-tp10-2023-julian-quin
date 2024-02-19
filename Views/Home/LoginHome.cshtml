@@ -1,0 +1,16 @@
+@model tl2_tp10_2023_julian_quin.ViewModels.LogedUserViewModel;
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="text-center">
+    @if(@Model.IsLoged)
+    {
+    <form method="post" action="/Login/LogOut" novalidate="novalidate">
+        <div class="form-group">
+            <label >Estás logueado con</label>  
+            <label ><b>@Model.Nombre</b>, nivel de acceso: <b>(@Model.NivelAcceso)</b></label>           
+        </div>
+        <button type="submit" class="btn btn-danger">Cerrar Session</button>
+    </form>
+    }
+</div>
