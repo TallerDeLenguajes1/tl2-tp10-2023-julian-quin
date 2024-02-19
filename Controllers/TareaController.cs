@@ -8,29 +8,26 @@ public class TareaController : Controller
     private readonly ILogger<TareaController> _logger;
     private readonly ITareasRepository _accesoTareas;
     private readonly ITableroRepository _accesoTableros;
+    private readonly IUsuarioRepository _usuariosRepository;
 
-    public TareaController(ILogger<TareaController> logger, ITareasRepository tareasRepository, ITableroRepository tableroRepository)
+    public TareaController(ILogger<TareaController> logger, ITareasRepository tareasRepository, ITableroRepository tableroRepository, IUsuarioRepository usuarioRepository)
     {
         _logger = logger;
         _accesoTareas = tareasRepository;
         _accesoTableros = tableroRepository;
-
+        _usuariosRepository = usuarioRepository;
     }
 
     [HttpGet]
-    public IActionResult Index(int idTablero)
+    public IActionResult TareasTablerosPropios(int idTablero)
     {
         try
         {
             if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
-            var idSession = (int)HttpContext.Session.GetInt32("Id");
             List<Tarea> tareas;
-            var idPropTableroPath = _accesoTableros.TableroViaId(idTablero).IdUsuarioPropietario;
             tareas = _accesoTareas.TareasDeUnTablero(idTablero);
-            if (idSession == idPropTableroPath)return View(new IndexTareaViewModel(tareas));
-            var tareasView= new IndexTareaViewModel(tareas);
-            ViewBag.idSession = idSession;
-            return View("Index2",tareasView);
+            return View(new IndexTareaViewModel(tareas));
+
         }
         catch (Exception ex)
         {
@@ -39,6 +36,17 @@ public class TareaController : Controller
         }
 
     }
+    
+    [HttpGet]
+    public IActionResult TareasTablerosNoPropios(int idTablero)
+    {
+        List<Tarea> tareas;
+        var idSession = IdSesion();
+        tareas = _accesoTareas.TareasDeUnTablero(idTablero);
+        ViewBag.idSession = idSession;
+        var tareasView= new IndexTareaViewModel(tareas);
+        return View(tareasView);
+    }
 
     [HttpGet]
     public IActionResult NuevaTarea()
@@ -46,19 +54,32 @@ public class TareaController : Controller
         try
         {
             if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
-            var usuarioId = (int)HttpContext.Session.GetInt32("Id");
+            var usuarioId = IdSesion();
             var nuevaTarea = new CrearTareaViewModel();
-            if (EsAdmin())
-            {
-                nuevaTarea.Tableros = _accesoTableros.Tableros();
-                return View(nuevaTarea);
-            }
-            else
-            {
-                nuevaTarea.Tableros = _accesoTableros.TablerosDeUnUsuario(usuarioId);
-                return View(nuevaTarea);
-            }
+            nuevaTarea.Tableros = _accesoTableros.TablerosDeUnUsuario(usuarioId);
+            nuevaTarea.Usuarios = _usuariosRepository.Usuarios();
+            return View(nuevaTarea);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return BadRequest(); 
+        }
 
+    }
+
+    [HttpGet]
+    public IActionResult NuevaTareaTableroExplicito(int IdTablero)
+    {
+        try
+        {
+            if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
+            var usuarioId = IdSesion();
+            var nuevaTarea = new CrearTareaViewModel();
+            nuevaTarea.Tableros = _accesoTableros.TablerosDeUnUsuario(usuarioId);
+            nuevaTarea.Usuarios = _usuariosRepository.Usuarios();
+            nuevaTarea.IdTablero = IdTablero;
+            return View(nuevaTarea);
         }
         catch (Exception ex)
         {
@@ -78,7 +99,7 @@ public class TareaController : Controller
             if (!ModelState.IsValid) return RedirectToAction("Index");
             var tareaConvertida = new Tarea(tarea);
             _accesoTareas.CrearTarea(tarea.IdTablero, tareaConvertida);
-            return RedirectToAction("Index", new { idTablero = tarea.IdTablero });
+            return RedirectToAction("TareasTablerosPropios", new { idTablero = tarea.IdTablero });
 
         }
         catch (Exception ex)
@@ -95,20 +116,10 @@ public class TareaController : Controller
         {
             if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
             var tarea = _accesoTareas.TareaId(idTarea);
-            var usuarioId = (int)HttpContext.Session.GetInt32("Id");
-            if (EsAdmin())
-            {
-                var tareaAmodificadar = new ModificarTareaViewModel(tarea);
-                tareaAmodificadar.Tableros = _accesoTableros.Tableros();
-                return View(tareaAmodificadar);
-            }
-            else
-            {
-                var tareaAmodificadar = new ModificarTareaViewModel(tarea);
-                tareaAmodificadar.Tableros = _accesoTableros.TablerosDeUnUsuario(usuarioId);
-                return View(tareaAmodificadar);
-            }
-
+            var tareaAmodificadar = new ModificarTareaViewModel(tarea);
+            tareaAmodificadar.Usuarios = _usuariosRepository.Usuarios();
+            return View(tareaAmodificadar);
+        
         }
         catch (Exception ex)
         {
@@ -126,7 +137,7 @@ public class TareaController : Controller
             if (!ModelState.IsValid) return RedirectToAction("Index");
             var tareaRecuperada = new Tarea(tarea);
             _accesoTareas.ModificarTarea(tarea.Id, tareaRecuperada);
-            return RedirectToAction("Index", new { idTablero = tarea.IdTablero });
+            return RedirectToAction("TareasTablerosPropios", new { idTablero = tarea.IdTablero });
 
         }
         catch (Exception ex)
@@ -144,7 +155,7 @@ public class TareaController : Controller
             var tarea = _accesoTareas.TareaId(idTarea);
             var tablero = _accesoTableros.TableroViaId(tarea.IdTablero);
             _accesoTareas.EliminarTarea(idTarea);
-            return RedirectToAction("Index", new { idTablero = tarea.IdTablero });
+            return RedirectToAction("TareasTablerosPropios", new { idTablero = tarea.IdTablero });
 
         }
         catch (Exception ex)
@@ -164,7 +175,8 @@ public class TareaController : Controller
             var tarea = _accesoTareas.TareaId(idTarea);
             tarea.Estado = estado;
             _accesoTareas.ModificarTarea(tarea.Id,tarea);
-            return RedirectToAction("Index" , new { idTablero = tarea.IdTablero});
+            TempData["EstadoTarea"] = "¡ Estado Actualizado !";
+            return RedirectToAction("TareasTablerosNoPropios",new { idTablero = tarea.IdTablero});
         }
         catch (Exception Ex)
         {
@@ -176,12 +188,17 @@ public class TareaController : Controller
     [HttpGet]
     public IActionResult TareasAsignadas()
     {
-        if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
-        var usuarioId = (int)HttpContext.Session.GetInt32("Id");
+        if (!SeLogueo()) return RedirectToRoute(new { controller = "Login", action = "Index" });
+        int usuarioId = IdSesion();
         var tareas = _accesoTareas.TareasDeUnUsuario(usuarioId);
         var tareasView = new IndexTareaViewModel(tareas);
         ViewBag.idSession = usuarioId;
-        return View("Index2",tareasView);
+        return View("TareasTablerosNoPropios", tareasView);
+    }
+
+    private int IdSesion()
+    {
+        return (int)HttpContext.Session.GetInt32("Id");
     }
 
     private bool EsAdmin()
