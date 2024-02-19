@@ -1,0 +1,32 @@
+@using tl2_tp10_2023_julian_quin.ViewModels
+@model IndexTableroViewModel 
+<div class="table-responsive">
+        <table class="table" style="background-color: #77dd779c;">
+            <thead style="background-color: #f3f3f3;">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Propietario</th>
+                    <th>Descripción</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tablero in Model.TablerosPropios)
+                {
+                    <tr style="background-color: #83c3ff31; color: black;">
+                        <td>@tablero.Nombre</td>
+                        <td>@tablero.NombrePropietario</td>
+                        <td>@tablero.Descripcion</td>
+                        <td>
+                            <a class="btn btn-sm" style="color: white;" role="button"
+                                asp-controller="Tablero" asp-action="ModificarTablero"
+                                asp-route-idTablero="@tablero.Id">
+                               <img src="~/img/lapiz.png"alt="editar" style="width: 10mm; height: 10mm;">
+                            </a>
+                        </td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>
