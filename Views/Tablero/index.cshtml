@@ -1,89 +1,123 @@
 @using tl2_tp10_2023_julian_quin.ViewModels
 @model IndexTableroViewModel
-
+@{ 
+    var mensaje = TempData["Mensaje"] as string;
+    int? idTablero = TempData["idTablero"] as int?;
+}
 <nav class="mb-4">
     <ul class="list-unstyled">
         <li class="d-inline-block mr-2">
-            <!-- Verde Pastel para botones de acción principal -->
-            <a class="btn" style="background-color: #77dd77; color: white;" role="button" aria-pressed="true" asp-controller="Tablero" asp-action="NuevoTablero">Nuevo Tablero</a>
+            <a class="btn" style="background-color: #77dd77; color: white;" role="button" aria-pressed="true"
+                asp-controller="Tablero" asp-action="NuevoTablero">Nuevo Tablero</a>
         </li>
         <li class="d-inline-block">
-            <!-- Verde Pastel para otro botón de acción principal -->
-            <a class="btn" style="background-color: #77dd77; color: white;" role="button" aria-pressed="true" asp-controller="Tarea" asp-action="Nuevatarea" asp-route-idTablero="">Crear Tareas</a>
+            <a class="btn" style="background-color: #77dd77; color: white;" role="button" aria-pressed="true"
+                asp-controller="Tarea" asp-action="Nuevatarea" asp-route-idTablero="">Crear Tareas</a>
         </li>
     </ul>
 </nav>
 
 <h3 class="text-center" class="mb-4">Tableros propios</h3>
-
-<div class="table-responsive">
-    <!-- Verde Pastel para el fondo de la tabla -->
-    <table class="table" style="background-color: #77dd77;">
-        <thead style="background-color: #cacaca;">
-            <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var tablero in Model.TablerosPropios)
-            {
-                <!-- Azul Pastel claro para las filas -->
-                <tr style="background-color: #4558610e; color: black;">
-                    <td hidden>@tablero.Id</td>
-                    <td>@tablero.Nombre</td>
-                    <td>@tablero.Descripcion</td>
-                    <td>
-                        <!-- Botones con fondo negro y texto blanco -->
-                        <a class="btn btn-sm" style="background-color: black; color: white;" role="button" asp-controller="Tablero" asp-action="ModificarTablero" asp-route-idTablero="@tablero.Id">Editar</a>
-
-                        <a class="btn btn-sm" style="background-color: black; color: white;" role="button" asp-controller="Tablero" asp-action="EliminarTablero" asp-route-idTablero="@tablero.Id" onclick="return confirm('¿Estás seguro que quieres eliminar el elemento?')">Eliminar</a>
-
-                        <a class="btn btn-sm" style="background-color: black; color: white;" role="button" asp-controller="Tarea" asp-action="Index" asp-route-idTablero="@tablero.Id">Tareas</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
-<h3 class="text-center">Tableros donde tienes tareas</h3>
-@if(Model.TablerosNoPropios.Count()==0)
+@if (Model.TablerosPropios.Count() == 0)
 {
-    <p class="text-center"> <strong>Aun no tienes tareas en ningun tablero<strong></p>
-} else{
+    <p class="text-center"><strong>Aun no tienes ningún tablero</strong></p>
+}
+else
+{
     <div class="table-responsive">
-    <table class="table" style="background-color: #77dd779c;">
-        <thead style="background-color: #f3f3f3;">
-            <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var tablero in Model.TablerosNoPropios)
-            {
-                <tr style="background-color: #83c3ff31; color: black;">
-                    <td hidden>@tablero.Id</td>
-                    <td>@tablero.Nombre</td>
-                    <td>@tablero.Descripcion</td>
-                    <td>
-                        <a class="btn btn-sm" style="background-color: rgba(0, 0, 0, 0); color: rgb(255, 255, 255);" role="button" asp-controller="Tarea" asp-action="Index" asp-route-idTablero="@tablero.Id">
-                            <!-- SVG icon for eye -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.12 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.173 8z"/>
-                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-                            </svg>
-                            Tareas
-                        </a>
-                    </td>
+        <table class="table" style="background-color: #77dd77;">
+            <thead style="background-color: #cacaca;">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Acciones</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var tablero in Model.TablerosPropios)
+                {
+                    <tr style="background-color: #4558610e; color: black;">
+                        <td hidden>@tablero.Id</td>
+                        <td>@tablero.Nombre</td>
+                        <td>@tablero.Descripcion</td>
+                        <td>
+                            <a class="btn btn-sm" style="color: white;" role="button"
+                                asp-controller="Tablero" asp-action="ModificarTablero"
+                                asp-route-idTablero="@tablero.Id">
+                               <img src="~/img/lapiz.png"alt="editar" style="width: 10mm; height: 10mm;">
+                            </a>
+
+                            <a class="btn btn-sm" style="color: white;" role="button"
+                                asp-controller="Tablero" asp-action="EliminarTablero" asp-route-idTablero="@tablero.Id"
+                                onclick="return confirm('¿Estás seguro que quieres eliminar el elemento?')">
+                                <img src="~/img/eliminar.png"alt="Eliminar" style="width: 10mm; height: 10mm;">
+                            </a>
+
+                            <a class="btn btn-sm" style="color: white;" role="button"
+                                asp-controller="Tarea" asp-action="TareasTablerosPropios" asp-route-idTablero="@tablero.Id">
+                                <img src="~/img/tareas.png"alt="tareas" style="width: 18mm; height: 10mm;">
+                            </a>
+                            <a class="btn btn-sm" style="color: white;" role="button"
+                                asp-controller="Tarea" asp-action="NuevaTareaTableroExplicito" asp-route-idTablero="@tablero.Id">
+                                <img src="~/img/nuevaTarea.png"alt="Nuevatarea" style="width: 12mm; height: 12mm;">
+                            </a>
+                            @if(mensaje!=null && idTablero == tablero.Id)
+                            {
+                                <p class="text-center" style="background-color : red; color: white; display: inline-block; padding: 3px; border-radius: 4px;">@mensaje</p>
+                                mensaje = null;
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
 }
 
+
+
+<h3 class="text-center">Tableros donde tienes tareas</h3>
+@if (Model.TablerosNoPropios.Count() == 0)
+{
+    <p class="text-center"> <strong>Aun no tienes tareas en ningun tablero<strong></p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table" style="background-color: #77dd779c;">
+            <thead style="background-color: #f3f3f3;">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tablero in Model.TablerosNoPropios)
+                {
+                    <tr style="background-color: #83c3ff31; color: black;">
+                        <td hidden>@tablero.Id</td>
+                        <td>@tablero.Nombre</td>
+                        <td>@tablero.Descripcion</td>
+                        <td>
+                            <a class="btn btn-sm" style="background-color: rgba(0, 0, 0, 0); color: rgb(255, 255, 255);"
+                                role="button" asp-controller="Tarea" asp-action="TareasTablerosNoPropios"
+                                asp-route-idTablero="@tablero.Id">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
+                                    class="bi bi-eye" viewBox="0 0 16 16">
+                                    <path
+                                        d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.12 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.173 8z" />
+                                    <path
+                                        d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                                </svg>
+                                Tareas
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+}

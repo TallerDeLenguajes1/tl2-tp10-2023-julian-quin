@@ -3,17 +3,7 @@
 <h2>Modificar Tablero</h2>
 <form class="forms_Modificar" asp-controller="Tablero" asp-action ="ModificarTablero"> 
     <input hidden asp-for="@Model.Id">
-    <div class="form-group">
-        <label asp-for="@Model.IdUsuarioPropietario">Propietario</label>@*muestra el nombre*@
-        <select asp-for="@Model.IdUsuarioPropietario" class="form-control"> @*muestra la caja donde se escribe o selecciona*@
-        <option value=""> Seleccione </option>
-        @foreach (var usuario in Model.Usuarios)
-        {
-            <option value="@usuario.Id">@usuario.NombreDeUsuario</option>
-        }
-        </select>
-        <span asp-validation-for="@Model.IdUsuarioPropietario" class="text-danger"></span>   
-    </div>
+    <input hidden asp-for="@Model.IdUsuarioPropietario">
     <div class="form-group">
         <label asp-for="@Model.Nombre">Nombre</label>
         <input asp-for="@Model.Nombre" class="form-control" />
