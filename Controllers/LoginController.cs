@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using tl2_tp10_2023_julian_quin.ViewModels;
 namespace tl2_tp10_2023_julian_quin.Controllers;
-
 public class LoginController : Controller
 {
 
@@ -50,5 +49,22 @@ public class LoginController : Controller
         HttpContext.Session.SetString("pass", Usuario.Contrasenia);
         HttpContext.Session.SetString("NivelAcceso", Usuario.Rol.ToString().ToLower());
         HttpContext.Session.SetInt32("Id", Usuario.Id);
+    }
+    public IActionResult Logout()
+    {
+        try
+        {
+            DesloguearUsuario();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error al intentar cerrar sesión del usuario {ex.ToString()}");
+        }
+        return RedirectToAction("Index");
+    }
+
+    private void DesloguearUsuario()
+    {
+        HttpContext.Session.Clear();
     }
 }
