@@ -2,7 +2,7 @@ using tl2_tp10_2023_julian_quin.Models;
 namespace tl2_tp10_2023_julian_quin.ViewModels;
 public class IndexUsuarioViewModel
 {
-    public List<UsuarioViewModel> usuarios {get; set;}
+    public List<UsuarioViewModel> usuarios = new();
     public IndexUsuarioViewModel(List<Usuario> usuariosPrimitivos)
     {
         usuarios = new();
