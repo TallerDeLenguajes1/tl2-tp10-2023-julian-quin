@@ -10,22 +10,14 @@ public enum EstadoTarea
 }
 public class Tarea
 {
-    private int id;
-    private int idTablero;
-    private string nombre;
-    private string descripcion;
-    private string color;
-    private int? idUsuarioAsignado;
+    public int Id {get; set;}
+    public string Nombre {get; set;}
+    public string Descripcion {get; set;}
+    public string Color {get; set;}
+    public EstadoTarea Estado {get; set;}
+    public int? IdUsuarioAsignado {get; set;}
+    public int IdTablero {get; set;}
     public string NombreUsuarioAsignado {get;set;}
-    private EstadoTarea estado;
-
-    public int Id { get => id; set => id = value; }
-    public string Nombre { get => nombre; set => nombre = value; }
-    public string Descripcion { get => descripcion; set => descripcion = value; }
-    public string Color { get => color; set => color = value; }
-    public EstadoTarea Estado { get => estado; set => estado = value; }
-    public int? IdUsuarioAsignado { get => idUsuarioAsignado; set => idUsuarioAsignado = value; }
-    public int IdTablero { get => idTablero; set => idTablero = value; }
     public Tarea (CrearTareaViewModel tarea)
     {
         Nombre = tarea.Nombre;
@@ -33,7 +25,7 @@ public class Tarea
         Color = tarea.Color;
         Estado = tarea.Estado;
         IdUsuarioAsignado = tarea.IdUsuarioAsignado;
-        idTablero = tarea.IdTablero; 
+        IdTablero = tarea.IdTablero; 
     }
     public Tarea(ModificarTareaViewModel tarea )
     {
@@ -43,7 +35,7 @@ public class Tarea
         Color = tarea.Color;
         Estado = tarea.Estado;
         IdUsuarioAsignado = tarea.IdUsuarioAsignado;
-        idTablero = tarea.IdTablero;
+        IdTablero = tarea.IdTablero;
     }
     public Tarea (){}
 }

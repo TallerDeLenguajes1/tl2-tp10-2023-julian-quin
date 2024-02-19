@@ -8,26 +8,22 @@ public enum Rol
 }
 public class Usuario 
 {
-    private int id;
-    private string nombreDeUsuario;
-    private Rol rol;
-    private string contrasenia;
 
-    public int Id { get => id; set => id = value; }
-    public string NombreDeUsuario { get => nombreDeUsuario; set => nombreDeUsuario = value; }
-    public string Contrasenia { get => contrasenia; set => contrasenia = value; }
-    internal Rol Rol { get => rol; set => rol = value; }
+    public int Id {get; set;}
+    public string NombreDeUsuario  {get; set;}
+    public string Contrasenia  {get; set;}
+    internal Rol Rol  {get; set;}
 
     public Usuario(CrearUsuarioViewModel usuario)
     {   
-        rol = usuario.Rol;         
+        Rol = usuario.Rol;         
         NombreDeUsuario = usuario.NombreDeUsuario;
         Contrasenia = usuario.Contrasenia;
     }
     public Usuario(ModificarUsuarioViewModel usuario)
     {  
         Id = usuario.Id; 
-        rol = usuario.Rol;         
+        Rol = usuario.Rol;         
         NombreDeUsuario = usuario.NombreDeUsuario;
         Contrasenia = usuario.Contrasenia;
     }
