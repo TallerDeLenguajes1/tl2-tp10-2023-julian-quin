@@ -21,12 +21,10 @@ public class TableroController : Controller
         try
         {
             if (!SeLogueo()) return RedirectToRoute(new { controller = "Login", action = "Index" });
-            if (EsAdmin()) return View(new IndexTableroViewModel(_accesoTableros.Tableros()));
-            var idUsuario = (int)HttpContext.Session.GetInt32("Id");
-            var tablerosPropios = _accesoTableros.TablerosDeUnUsuario(idUsuario);
+            var idUsuario =  IdSesion();
             var tablerosNoPropios = _accesoTableros.TablerosTareasUsuario(idUsuario);
-            var AlModelo = new IndexTableroViewModel(tablerosPropios,tablerosNoPropios);
-            return View(AlModelo);
+            var tablerosPropios = _accesoTableros.TablerosDeUnUsuario(idUsuario);
+            return View(new IndexTableroViewModel(tablerosPropios,tablerosNoPropios));
         }
         catch (Exception ex)
         {
@@ -34,6 +32,22 @@ public class TableroController : Controller
             return BadRequest();
         }
 
+    }
+    [HttpGet]
+    public IActionResult OtrosTableros(int idUsuario)
+    {
+        try
+        {
+            if (!SeLogueo()) return RedirectToRoute(new { controller = "Login", action = "Index" });
+            if (!EsAdmin()) return BadRequest();
+            var tableros= _accesoTableros.TablerosRestantes(idUsuario);
+            return View(new IndexTableroViewModel(tableros));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return BadRequest();
+        }
     }
 
     [HttpGet]
@@ -43,7 +57,14 @@ public class TableroController : Controller
         {
             if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
             var nuevoTablero = new CrearTableroViewModel();
-            return View(nuevoTablero);
+            if (EsAdmin())
+            {
+                nuevoTablero.Usuarios = _accesoUsuarios.Usuarios();
+                return View(nuevoTablero);
+            }
+            var idUsuario = (int)HttpContext.Session.GetInt32("Id");
+            nuevoTablero.Usuarios.Add(_accesoUsuarios.UsuarioViaId(idUsuario));
+            return View(nuevoTablero); 
         }
         catch (Exception ex)
         {
@@ -60,10 +81,11 @@ public class TableroController : Controller
         {
             if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
             if (!ModelState.IsValid) return RedirectToAction("Index");
-            var idSession = (int)HttpContext.Session.GetInt32("Id");
             var nuevotablero = new Tablero(tablero);
-            nuevotablero.IdUsuarioPropietario = idSession;
             _accesoTableros.NuevoTablero(nuevotablero);
+            var tableros = _accesoTableros.Tableros();
+            TempData["idTablero"] = tableros.FirstOrDefault(t => t.Nombre == tablero.Nombre).Id;
+            TempData["Mensaje"] = "Nuevo";
             return RedirectToAction("Index");
 
         }
@@ -82,9 +104,8 @@ public class TableroController : Controller
         {
             if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
             var tablero = _accesoTableros.TableroViaId(idTablero);
-            var usuarios = _accesoUsuarios.Usuarios();
+            var idUsuario = IdSesion();
             var tableroAmodificadar = new ModificarTableroViewModel(tablero);
-            tableroAmodificadar.Usuarios = usuarios;
             return View(tableroAmodificadar);
 
         }
@@ -104,6 +125,8 @@ public class TableroController : Controller
             if (!ModelState.IsValid) return RedirectToAction("Index");
             var tableroModificaciones = new Tablero(tablero);
             _accesoTableros.ModificarTablero(tableroModificaciones, tableroModificaciones.Id);
+            TempData["idTablero"] = tablero.Id;
+            TempData["Mensaje"] = "Actualizado";
             return RedirectToAction("Index");
         }
         catch (Exception ex)
@@ -146,6 +169,10 @@ public class TableroController : Controller
         if (HttpContext.Session.GetString("Usuario") != null && HttpContext.Session.GetInt32("Id") != null
         && HttpContext.Session.GetString("NivelAcceso") != null) return true;
         return false;
+    }
+    private int IdSesion()
+    {
+        return (int)HttpContext.Session.GetInt32("Id");
     }
 
 
