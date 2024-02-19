@@ -15,6 +15,7 @@ public class CrearTareaViewModel
     [Required(ErrorMessage = "Este campo es requerido")]
     [Display(Name = "Id De Tablero")]
     public int IdTablero  { get; set;}
+    public List<Usuario> Usuarios;
 
 
     public int? IdUsuarioAsignado  { get; set;}

@@ -23,11 +23,9 @@ public class ModificarTareaViewModel
 
     [Required(ErrorMessage = "Este campo es requerido")]
     public int IdTablero  { get; set;} // para el link que lleva al get 
-    
-    
     public int? IdUsuarioAsignado  { get; set;}
-    public List<Tablero> Tableros; 
     public int Id{get; set;} // para identificar la tarea desde el metodo get
+    public List<Usuario> Usuarios;
     public ModificarTareaViewModel(Tarea tarea)
     {
         Id = tarea.Id;
