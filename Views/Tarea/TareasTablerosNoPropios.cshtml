@@ -1,5 +1,8 @@
 @using tl2_tp10_2023_julian_quin.ViewModels
 @model IndexTareaViewModel
+@{ 
+    var mensaje = TempData["EstadoTarea"] as string;
+}
 
 <h2>Lista de Tareas</h2>
 <nav class="mb-4">
@@ -10,8 +13,17 @@
         </li>
     </ul>
 </nav>
-
-<table class="table table-dark table-striped">
+@if(mensaje!=null)
+{
+    <p class="text-center" style="background-color : rgba(42, 201, 28, 0.808); color: rgb(0, 0, 0); display: inline-block; padding: 5px;">@mensaje</p>
+    mensaje = null;
+}
+@if(Model.tareasView.Count()==0)
+{
+    <p class="text-center"><strong>Aun no tienes ninguna tarea asignada</strong></p>
+}else
+{
+    <table class="table table-dark table-striped">
     <thead>
         <tr>
             <th>Nombre</th>
@@ -20,6 +32,7 @@
             <th>Color</th>
             <th>Estado</th>
             <th>Acciones</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -43,7 +56,17 @@
                     }
                 </td>
                 
+                @if(ViewBag.idSession == tarea.IdUsuarioAsignado)
+                {
+                    <td> <img src="~/img/usuario.png" alt="Asignado a mí" style="width: 8mm; height: 8mm;"></td>
+                }else {<td></td>}   
             </tr>
         }
     </tbody>
 </table>
+<div>
+   <p style="display: inline-block;">Identifica tus tareas asignadas apartir del icono distintivo : </p><img src="~/img/usuario.png" alt="Asignado a mí" style="width: 6mm; height: 6mm;">
+</div>
+
+}
+

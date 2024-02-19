@@ -5,8 +5,9 @@
 <nav class="mb-4">
     <ul class="list-unstyled">
         <li class="d-inline-block">
-            <a class="btn btn-secondary" role="button" aria-pressed="true" asp-controller="Tablero" asp-action="Index" style="color: rgb(255, 255, 255);">Volver</a>
+            <a class="btn btn-secondary" role="button" aria-pressed="true" asp-controller="Tablero" asp-action="Index" style="color: rgb(255, 255, 255); background-color:rgb(0, 0, 0);">Volver</a>
         </li>
+
     </ul>
 </nav>
 @if(Model.tareasView.Count()==0)
@@ -35,8 +36,18 @@
                 <td>@tarea.Color</td>
                 <td>@tarea.Estado</td>
                 <td>
-                    <a class="btn btn-secondary btn-sm" role="button" asp-controller="Tarea" asp-action="ModificarTarea" asp-route-idTarea="@tarea.Id">Editar</a>
-                    <a class="btn btn-danger btn-sm" role="button" asp-controller="Tarea" asp-action="EliminarTarea" asp-route-idTarea="@tarea.Id" onclick="return confirm('¿Estas seguro que quieres eliminar el elemento?')">Eliminar</a>
+                    <a class="btn btn-sm" style="color: white;" role="button"
+                        asp-controller="Tarea" asp-action="ModificarTarea"
+                        asp-route-idTarea="@tarea.Id">
+                        <img src="~/img/lapiz.png"alt="editar" style="width: 10mm; height: 10mm;">
+                    </a>
+
+                    <a class="btn btn-sm" style="color: white;" role="button"
+                        asp-controller="Tarea" asp-action="EliminarTarea" asp-route-idTarea="@tarea.Id"
+                        onclick="return confirm('¿Estás seguro que quieres eliminar esta tarea?')">
+                       <img src="~/img/eliminar.png"alt="Eliminar" style="width: 10mm; height: 10mm;">Eliminar
+                    </a>
+                   
                 </td>
             </tr>
         }

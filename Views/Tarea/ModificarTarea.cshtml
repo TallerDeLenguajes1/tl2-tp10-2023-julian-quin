@@ -3,18 +3,8 @@
 <h2>Modificar Tarea</h2>
 
 <form class="forms_Modificar" asp-controller="Tarea" asp-action ="ModificarTarea"> 
-    <input hidden asp-for="@Model.Id"> @*si borro esto, sucede que al endpoint [post] no llega el id, y si lo dejo y no pongo el hidden lo expongo*@
-    <input hidden asp-for="@Model.IdUsuarioAsignado">
-     <div class="form-group">
-        <label asp-for="@Model.IdTablero">Tablero</label>@*muestra el nombre*@
-        <select asp-for="@Model.IdTablero"class="form-control"> @*muestra la caja donde se escribe o selecciona*@
-        @foreach (var tablero in Model.Tableros)
-        {
-            <option value="@tablero.Id">@tablero.Nombre</option>
-        }
-        </select>
-        <span asp-validation-for="@Model.IdTablero" class="text-danger"></span>   
-    </div>
+    <input hidden asp-for="@Model.Id"> 
+    <input hidden asp-for="@Model.IdTablero">
 
     <div class="form-group">
         <label asp-for="@Model.Nombre">Nombre</label>
@@ -30,6 +20,16 @@
         <label asp-for="@Model.Color">Color</label>
         <input asp-for="@Model.Color" class="form-control" />
         <span asp-validation-for="@Model.Color" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.IdUsuarioAsignado">Asignar usuario</label>
+        <select asp-for="@Model.IdUsuarioAsignado" class="form-control">
+            <option value="">sin Asignar</option>
+            @foreach (var usuario in Model.Usuarios)
+            {
+                <option value="@usuario.Id">@usuario.NombreDeUsuario</option>
+            }
+        </select>
     </div>
     <div class="form-group">
         <label asp-for="@Model.Estado">Estado</label>

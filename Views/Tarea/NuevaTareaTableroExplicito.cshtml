@@ -3,19 +3,7 @@
 <h2>Crear Tarea</h2>
 
 <form class="forms_Crear" asp-controller="Tarea" asp-action ="NuevaTarea"> 
-    
-    <div class="form-group">
-        <label asp-for="@Model.IdTablero">Tablero</label>
-        <select asp-for="@Model.IdTablero" class="form-control">
-        <option value="" selected>Seleccionar</option>
-        @foreach (var tablero in Model.Tableros)
-        {
-            <option value="@tablero.Id">@tablero.Nombre</option>
-        }
-        </select>
-        <span asp-validation-for="@Model.IdTablero" class="text-danger"></span>   
-    </div>
-  
+    <input hidden asp-for="@Model.IdTablero">
     <div class="form-group">
         <label asp-for="@Model.Nombre">Nombre</label>
         <input asp-for="@Model.Nombre" class="form-control" />
@@ -42,6 +30,7 @@
      <div class="form-group">
         <label asp-for="@Model.IdUsuarioAsignado">Asignar usuario</label>
         <select asp-for="@Model.IdUsuarioAsignado" class="form-control">
+            <option value="">sin Asignar</option>
             @foreach (var usuario in Model.Usuarios)
             {
                 <option value="@usuario.Id">@usuario.NombreDeUsuario</option>
