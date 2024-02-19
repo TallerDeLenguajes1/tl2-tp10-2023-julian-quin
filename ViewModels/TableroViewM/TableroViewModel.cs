@@ -6,12 +6,14 @@ public class TableroViewModel
     public int Id {get; set;} //lo necesito para los links(Editar o eliminar)
     public string Nombre { get ; set; }
     public string Descripcion { get ; set; }
+    public string NombrePropietario {get;set;}
 
     public TableroViewModel(Tablero tablero)
     {
         Id = tablero.Id;
         Nombre = tablero.Nombre;
         Descripcion = tablero.Descripcion;
+        NombrePropietario = tablero.NombrePropietario;
     }
     
 }

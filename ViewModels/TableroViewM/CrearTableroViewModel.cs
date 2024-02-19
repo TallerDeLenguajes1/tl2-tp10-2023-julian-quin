@@ -11,6 +11,7 @@ public class CrearTableroViewModel
 
     [Display(Name = "Descripcion")]
     public string Descripcion { get ; set; }
+    public List<Usuario> Usuarios = new();
     public CrearTableroViewModel(){}
     
    
