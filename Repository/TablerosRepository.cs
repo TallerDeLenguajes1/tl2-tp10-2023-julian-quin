@@ -181,6 +181,33 @@ public class TableroRepository:ITableroRepository
         return respuesta > 0;
 
     }
+    public List<Tablero> TablerosRestantes(int idUsuario)
+    {
+        string query = "SELECT tablero.id_usuario_propietario, tablero.nombre, tablero.descripcion, tablero.id, usuario.nombre_de_usuario FROM Tablero JOIN usuario on usuario.id = tablero.id_usuario_propietario WHERE id_usuario_propietario != @idUsuario";
+        List<Tablero> tableros = new();
+        Tablero tablero;
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion) )
+        {
+            connection.Open();
+            var command = new SQLiteCommand(query, connection);
+            command.Parameters.Add(new SQLiteParameter("@idUsuario",idUsuario));
+            using (SQLiteDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    tablero = new();
+                    tablero.Id = Convert.ToInt32(reader["id"]);
+                    tablero.Nombre = reader["nombre"].ToString();
+                    tablero.Descripcion = reader["descripcion"].ToString();
+                    tablero.NombrePropietario = reader["nombre_de_usuario"].ToString();
+                    tablero.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
+                    tableros.Add(tablero);
+                }
+            }
+        }
+        return tableros;
+
+    }
     
 
 
