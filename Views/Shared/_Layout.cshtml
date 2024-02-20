@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    int? IdLogueado = Context.Request.HttpContext.Session.GetInt32("Id");
+    bool Selogueo = Context.Request.HttpContext.Session.GetString("Usuario") != null;
+    bool EsAdmin = Context.Request.HttpContext.Session.GetString("NivelAcceso") == Rol.administrador.ToString();
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,7 +17,6 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                @* <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">tl2_tp10_2023_julian_quin</a> *@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,7 +24,8 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                            <img src="~/img/home.png"alt="home" style="width: 10mm; height: 10mm;"></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
@@ -29,10 +34,27 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Tablero" asp-action="Index">Tableros</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tarea" asp-action="TareasAsignadas">Mis Tareas</a>
+                              <a class="nav-link text-dark" asp-area="" asp-controller="Tarea" asp-action="TareasAsignadas">Mis Tareas</a>
                         </li>
+                        @if(EsAdmin)
+                        {
+                            <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Tablero" asp-action="OtrosTableros" asp-route-idUsuario="@IdLogueado">Otros Tableros</a>
+                            </li>
+                        }
                     </ul>
+                    
                 </div>
+                 @if(Selogueo)
+                 {
+                    <div class="navbar-nav">
+                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LoginHome">
+                             <img src="~/img/usuario_default.png" alt="User" style="height: 30px;">
+                         </a>
+                    </div>
+                 }
+               
+                 
             </div>
         </nav>
     </header>
