@@ -20,6 +20,10 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Home/LoginHome.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2dpbkhvbWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -52,12 +56,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVyb1xOdWV2b1RhYmxlcm8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tarea/index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcaW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tarea/index2.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcaW5kZXgyLmNzaHRtbA==
+[C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tablero/OtrosTableros.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVyb1xPdHJvc1RhYmxlcm9zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tarea/MensajeAdvertencia.cshtml]
@@ -70,6 +70,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tarea/NuevaTarea.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcTnVldmFUYXJlYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tarea/NuevaTareaTableroExplicito.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcTnVldmFUYXJlYVRhYmxlcm9FeHBsaWNpdG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tarea/TareasTablerosNoPropios.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcVGFyZWFzVGFibGVyb3NOb1Byb3Bpb3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tarea/TareasTablerosPropios.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcVGFyZWFzVGFibGVyb3NQcm9waW9zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Usuario/index.cshtml]

@@ -13,8 +13,36 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\img\\Kanban.jpg",
-      "PackagePath": "staticwebassets\\img\\Kanban.jpg"
+      "Id": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\img\\eliminar.png",
+      "PackagePath": "staticwebassets\\img\\eliminar.png"
+    },
+    {
+      "Id": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\img\\home.png",
+      "PackagePath": "staticwebassets\\img\\home.png"
+    },
+    {
+      "Id": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\img\\lapiz.png",
+      "PackagePath": "staticwebassets\\img\\lapiz.png"
+    },
+    {
+      "Id": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\img\\nuevaTarea.png",
+      "PackagePath": "staticwebassets\\img\\nuevaTarea.png"
+    },
+    {
+      "Id": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\img\\tablero.png",
+      "PackagePath": "staticwebassets\\img\\tablero.png"
+    },
+    {
+      "Id": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\img\\tareas.png",
+      "PackagePath": "staticwebassets\\img\\tareas.png"
+    },
+    {
+      "Id": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\img\\usuario.png",
+      "PackagePath": "staticwebassets\\img\\usuario.png"
+    },
+    {
+      "Id": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\img\\usuario_default.png",
+      "PackagePath": "staticwebassets\\img\\usuario_default.png"
     },
     {
       "Id": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\js\\site.js",
