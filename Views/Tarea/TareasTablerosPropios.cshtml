@@ -1,7 +1,11 @@
 @using tl2_tp10_2023_julian_quin.ViewModels
 @model IndexTareaViewModel
+@{ 
+    var mensaje = TempData["Mensaje"] as string;
+    int? idTarea = TempData["idTarea"] as int?;
+}
 
-<h2>Tareas</h2>
+<h4 class="text-center" class="mb-4" >Tareas</h4>
 <nav class="mb-4">
     <ul class="list-unstyled">
         <li class="d-inline-block">
@@ -15,42 +19,39 @@
      <p class="text-center"> <strong>Aún no tienes tareas en el tablero<strong></p>
 
 }else{
-    <table class="table table-dark table-striped">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Propietario</th>
-            <th>Descripcion</th>
-            <th>Color</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
+    <div class="table-responsive">
+    <table class="table">
     <tbody>
         @foreach (var tarea in Model.tareasView)
         {
-            <tr class="table-secondary">
+            <tr>
                 <td>@tarea.Nombre</td>
                 <td>@tarea.NombreEncargado</td>
                 <td>@tarea.Descripcion</td>
                 <td>@tarea.Color</td>
                 <td>@tarea.Estado</td>
                 <td>
-                    <a class="btn btn-sm" style="color: white;" role="button"
+                    <a class="btn btn-sm" style="color: rgb(0, 0, 0);" role="button"
                         asp-controller="Tarea" asp-action="ModificarTarea"
                         asp-route-idTarea="@tarea.Id">
-                        <img src="~/img/lapiz.png"alt="editar" style="width: 10mm; height: 10mm;">
+                        <img src="~/img/lapiz.png"alt="editar" style="width: 10mm; height: 10mm;">Editar
                     </a>
 
-                    <a class="btn btn-sm" style="color: white;" role="button"
+                    <a class="btn btn-sm" style="color: rgb(0, 0, 0);" role="button"
                         asp-controller="Tarea" asp-action="EliminarTarea" asp-route-idTarea="@tarea.Id"
                         onclick="return confirm('¿Estás seguro que quieres eliminar esta tarea?')">
                        <img src="~/img/eliminar.png"alt="Eliminar" style="width: 10mm; height: 10mm;">Eliminar
                     </a>
+                    @if (mensaje!= null && tarea.Id == idTarea)
+                    {
+                         <p class="text-center" style="background-color : red; color: white; display: inline-block; padding: 3px; border-radius: 4px;">@mensaje</p>
+                        mensaje = null;
+                    }
                    
                 </td>
             </tr>
         }
     </tbody>
 </table>
+</div>
 }

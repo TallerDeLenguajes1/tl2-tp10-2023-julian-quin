@@ -1,0 +1,60 @@
+@using tl2_tp10_2023_julian_quin.ViewModels
+@model IndexTareaViewModel
+@{ 
+    var mensaje = TempData["Mensaje"] as string;
+    int? idTarea = TempData["idTarea"] as int?;
+}
+
+<h4 class="text-center">Tus tareas</h4>
+<nav class="mb-4">
+    <ul class="list-unstyled">
+        <li class="d-inline-block">
+            <a class="btn btn-secondary" role="button" aria-pressed="true" asp-controller="Tablero" asp-action="Index"
+                style="color: rgb(255, 255, 255);">Ir a tableros</a>
+        </li>
+    </ul>
+</nav>
+<div>
+    <h6 class="text-center">Filtra tus tareas por estado</h6>
+    <form class ="formulario-personalizado2" asp-controller="Tarea" asp-action="ListarTareaPorEstado">
+        <select name="Estado" asp-items="@Html.GetEnumSelectList<EstadoTarea>()"></select>
+        <input type="submit" value="Aplicar">
+    </form>
+</div>
+@if(Model.tareasView.Count()==0)
+{
+    <p class="text-center"><strong>¡Ups! Aun no hay tareas </strong></p>
+}else
+{
+   <div class="table-responsive">
+    <table class="table">
+    <tbody>
+        @foreach (var tarea in Model.tareasView)
+        {
+            <tr>
+                <td>@tarea.Nombre</td>
+                <td>@tarea.NombreEncargado</td>
+                <td>@tarea.Descripcion</td>
+                <td>@tarea.Color</td>
+                <td>@tarea.Estado</td>
+                <td>
+                   
+                    <form class ="formulario-personalizado" asp-controller="Tarea" asp-action="CambiarEstadoTareaNav">
+                        <select name="Estado" asp-items="@Html.GetEnumSelectList<EstadoTarea>()">
+                        </select>
+                        <input hidden name="idTarea" value="@tarea.Id">
+                        <input type="submit" value="Cambiar">
+                         @if(mensaje!=null && idTarea == tarea.Id)
+                        {
+                         <p class="text-center" style="background-color : red; color: white; display: inline-block; padding: 3px; border-radius: 4px;">@mensaje</p>
+                         mensaje = null;
+                         }
+                    </form>
+                </td> 
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+
+}
