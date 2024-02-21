@@ -81,7 +81,6 @@ public class TareasRepository:ITareasRepository
         }
 
     }
-    //Obtener detalles de una tarea por su ID. (devuelve un objeto Tarea)
     public Tarea TareaId(int id)
     {   
         var queryString = @"SELECT * FROM Tarea WHERE id = @id;";
@@ -114,7 +113,6 @@ public class TareasRepository:ITareasRepository
         
 
     }
-    //Listar todas las tareas asignadas a un usuario específico.(recibe un idUsuario devuelve un list de tareas)
     public List<Tarea> TareasDeUnUsuario(int idUsuario)
     {
         string query =  "SELECT Tarea.id, Tarea.id_tablero , Tarea.nombre, Tarea.descripcion, Tarea.color, Tarea.id_usuario_asignado, Tarea.estado, Usuario.nombre_de_usuario FROM Tarea LEFT JOIN usuario ON Usuario.id = Tarea.id_usuario_asignado WHERE Usuario.id = @idusuario";
@@ -147,7 +145,6 @@ public class TareasRepository:ITareasRepository
         return tareas;
 
     }
-    //Listar todas las tareas de un tablero específico. (recibe un idTablero, devuelve un list de tareas)
 
     public List<Tarea> TareasDeUnTablero(int idTablero)
     {
@@ -180,7 +177,6 @@ public class TareasRepository:ITareasRepository
         }
         return tareas;
     }
-   //Eliminar una tarea (recibe un IdTarea) 
     public void EliminarTarea(int idTarea)
     {
         var query = "DELETE FROM Tarea WHERE id = @idTarea";
@@ -195,7 +191,6 @@ public class TareasRepository:ITareasRepository
 
         }
     }
-    //Asignar Usuario a Tarea (recibe idUsuario y un idTarea)
     public void AsignarTarea(int idUsuario, int idTarea)
     {
         var query = "UPDATE Tarea set  id_usuario_asignado = @usuarioAsignado   WHERE id = @idTarea";

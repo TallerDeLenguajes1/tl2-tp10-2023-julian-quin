@@ -26,7 +26,6 @@ public class TableroRepository:ITableroRepository
         }
         return tablero;
     }
-    //Modificar un tablero existente (recibe un id y un objeto Tablero)
     public void ModificarTablero(Tablero tablero, int id)
     {
         var query = "UPDATE Tablero SET id_usuario_propietario = @id_usu_pt, nombre = @nombre, descripcion = @descripcion WHERE id = @id";
@@ -44,7 +43,6 @@ public class TableroRepository:ITableroRepository
 
     }
 
-    //Obtener detalles de un tablero por su ID. (recibe un id y devuelve un Tablero)
     public Tablero TableroViaId(int id)
     {
         string query = "SELECT * FROM Tablero WHERE id = @id";
@@ -95,12 +93,10 @@ public class TableroRepository:ITableroRepository
         return tableros;
 
     }
-    //Listar todos los tableros de un usuario específico. (recibe un IdUsuario, devuelve un list de tableros)
+  
     public List<Tablero> TablerosDeUnUsuario(int? idUsuario)
     {
         string query = "SELECT * FROM Tablero WHERE id_usuario_propietario = @idUsuario";
-        //si hago un JOIN, creo que deberia tener un campo nombreUsuarioPropietario en la Clase Tablero, y así lograr mostrar el nombre más el id del propietario.
-        // string query = "SELECT Tablero.id, Tablero.nombre, Tablero.descripcion,Tablero.id_usuario_propietario, Usuario.nombre_de_usuario FROM Tablero JOIN Usuario ON Tablero.id_usuario_propietario = Usuario.id WHERE id_usuario_propietario = @idUsuario";
         List<Tablero> tableros = new();
         Tablero tablero;
         using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion) )
@@ -128,6 +124,11 @@ public class TableroRepository:ITableroRepository
     public List<Tablero> TablerosTareasUsuario(int idUsuario)
     {
         string query ="SELECT DISTINCT tablero.* FROM tablero JOIN Tarea ON tablero.id = tarea.id_tablero WHERE tarea.id_usuario_asignado = @idUsuario AND tablero.id_usuario_propietario != @idUsuario;";
+
+        //selecioname registros distintos de la tabla tablero, relacionadolo con la tabla tarea 
+        //donde el id de tablero deber ser igual a un id de una tarea, pero no cualquier tarea, la tarea debe ser mia.
+        // aparte debe pasar que ese tablero que me estas trayenado no sea mio.
+
         List<Tablero> tableros = new();
         Tablero tablero;
         using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion) )

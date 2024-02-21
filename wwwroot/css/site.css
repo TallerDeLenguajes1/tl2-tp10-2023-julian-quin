@@ -74,13 +74,13 @@ table td,th {
 }
 .formulario-personalizado {
   display: flex;
-  align-items: center; /* Alinea verticalmente los elementos */
+  align-items: center; 
 }
 
 .formulario-personalizado select,
 .formulario-personalizado input[type="submit"],
 .formulario-personalizado a.btn {
-  margin-right: 10px; /* Agrega espacio entre los elementos */
+  margin-right: 10px; 
 }
 .formulario-personalizado select
 {
@@ -95,13 +95,13 @@ table td,th {
 }
 li {
   display: flex;
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center; /* Centra verticalmente */
-  height: 40px; /* Ejemplo de altura, ajusta según sea necesario */
+  justify-content: center; 
+  align-items: center; 
+  height: 40px; 
 }
 td 
 {
-  text-align: center; /* Centra horizontalmente el contenido */
+  text-align: center; 
   vertical-align: middle; 
 }
 .formulario-personalizado2
@@ -155,4 +155,11 @@ td
 .table th
 {
   background-color: #8d8d8d7e;
+}
+.table-tb-no-propios td{
+  background-color: rgba(255, 241, 41, 0.336) ;
+}
+.table-usuario {
+  background-color: rgba(0, 88, 19, 0.795) ;
+  color: white;
 }
