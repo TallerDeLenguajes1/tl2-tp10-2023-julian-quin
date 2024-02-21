@@ -183,7 +183,7 @@ public class TareaController : Controller
     }
 
     [HttpPost]
-    public IActionResult CambiarEstadoTarea(int idTarea, EstadoTarea estado)
+    public IActionResult CambiarEstadoTareaTablerosNoPropio (int idTarea, EstadoTarea estado) //desde la vista tareas-asignadas
     {
         try
         {
@@ -192,7 +192,7 @@ public class TareaController : Controller
             tarea.Estado = estado;
             _accesoTareas.ModificarTarea(tarea.Id, tarea);
             TempData["EstadoTarea"] = "¡ Estado Actualizado !";
-            return RedirectToAction("TareasTablerosNoPropios", new { idTablero = tarea.IdTablero });
+            return RedirectToAction("TareasTablerosNoPropios", new { idTablero = tarea.IdTablero });//(*)
         }
         catch (Exception Ex)
         {
@@ -200,17 +200,18 @@ public class TareaController : Controller
             return View("Error");
         }
     }
-    public IActionResult CambiarEstadoTareaNav(int idTarea, EstadoTarea estado)
+    public IActionResult  CambiarEstadoTareaAsignadas(int idTarea, EstadoTarea estado) //desde la vista tareas-tableros-no-propios
     {
         try
         {
+            
             if (!SeLogueo()) return RedirectToRoute(new { controller = "Home", action = "Index" });
             var tarea = _accesoTareas.TareaId(idTarea);
             tarea.Estado = estado;
             _accesoTareas.ModificarTarea(tarea.Id, tarea);
             TempData["Mensaje"] = "Actualizada";
             TempData["idTarea"] = tarea.Id;
-            return RedirectToAction("TareasAsignadas");
+            return RedirectToAction("TareasAsignadas"); //la redireccion es diferente (*)
         }
         catch (Exception Ex)
         {

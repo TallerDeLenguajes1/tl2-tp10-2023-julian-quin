@@ -145,9 +145,8 @@ public class TableroController : Controller
             {
                 _accesoTableros.EliminarTablero(idTablero);
                 return RedirectToAction("Index");
-                
             }
-            return View("MensajeAdvertencia", idTablero);
+            return View("MensajeAdvertencia",idTablero); //id para ir al tablero
            
         }
         catch (Exception ex)
