@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ikS6PMW6rObzaweUL35+UJ2QA9hUPA4y9t0pLDv3bzs=",
+  "Hash": "QiqO+646WJwLkrZWyEDBSEfDE/qg3xCL0IwgqyLJW0E=",
   "Source": "tl2-tp10-2023-julian-quin",
   "BasePath": "_content/tl2-tp10-2023-julian-quin",
   "Mode": "Default",
@@ -100,6 +100,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\eliminar.png"
+    },
+    {
+      "Identity": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\img\\Error.png",
+      "SourceId": "tl2-tp10-2023-julian-quin",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\",
+      "BasePath": "_content/tl2-tp10-2023-julian-quin",
+      "RelativePath": "img/Error.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\Error.png"
     },
     {
       "Identity": "C:\\Users\\julio\\Desktop\\tl2-tp10-2023-julian-quin\\wwwroot\\img\\home.png",

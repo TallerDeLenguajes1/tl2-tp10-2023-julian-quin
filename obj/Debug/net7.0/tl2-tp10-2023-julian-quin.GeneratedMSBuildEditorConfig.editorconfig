@@ -40,6 +40,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tablero/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVyb1xFcnJvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tablero/index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVyb1xpbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -60,6 +64,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVyb1xPdHJvc1RhYmxlcm9zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tarea/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tarea/MensajeAdvertencia.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcTWVuc2FqZUFkdmVydGVuY2lhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -72,8 +80,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcTnVldmFUYXJlYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tarea/NuevaTareaTableroExplicito.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcTnVldmFUYXJlYVRhYmxlcm9FeHBsaWNpdG8uY3NodG1s
+[C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tarea/NuevaTareaDesdeUnTablero.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcTnVldmFUYXJlYURlc2RlVW5UYWJsZXJvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tarea/TareasAsignadas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcVGFyZWFzQXNpZ25hZGFzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tarea/TareasTablerosNoPropios.cshtml]
@@ -82,6 +94,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Tarea/TareasTablerosPropios.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcVGFyZWFzVGFibGVyb3NQcm9waW9zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Usuario/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xFcnJvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/julio/Desktop/tl2-tp10-2023-julian-quin/Views/Usuario/index.cshtml]

@@ -2,6 +2,13 @@
     ViewData["Title"] = "Home Page";
 }
 <h4 class="text-center" >Bienvenido a tu espacio de trabajo kanban digital</h4>
+<nav class="mb-4">
+    <ul class="list-unstyled text-center">
+        <li class="d-inline-block  mx-auto">
+            <a class="btn btn-secondary" role="button" aria-pressed="true" asp-controller="Tablero" asp-action="Index" style="background-color: blue; color : white">Comenzar</a>
+        </li>
+    </ul>
+</nav>
 <figure>
     <img  style="width: 800px; height: 500px" src="@Url.Content("~/img/tablero.png")" alt="Descripción de la imagen">
 </figure>

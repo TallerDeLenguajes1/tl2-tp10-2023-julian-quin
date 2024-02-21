@@ -89,7 +89,7 @@ table td,th {
 .formulario-personalizado input
 {
   border-radius: 5px;
-  background: rgb(98, 143, 31);
+  background: rgb(0, 0, 0);
   color:rgb(255, 255, 255);
   border: solid black 2px;
 }
@@ -103,4 +103,56 @@ td
 {
   text-align: center; /* Centra horizontalmente el contenido */
   vertical-align: middle; 
+}
+.formulario-personalizado2
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 2vh;
+  width: 20%;
+  border-radius: 5px;
+}
+.formulario-personalizado2 , input, select
+{
+  margin-top: 1vh;
+}
+  
+.formulario-personalizado2 input {
+  margin-left: 1vw;
+  border-radius: 5px;
+  background-color: black;
+  padding: 3%;
+  width: 6.5vw;
+  color: white;
+
+}
+  
+.formulario-personalizado2 select {
+  margin-right: 1vw;
+  border-radius: 5px;
+  background-color: black;
+  padding: 3%;
+  color: white;
+}
+.table {
+  border-radius: 20px;
+  border-collapse: collapse; 
+}
+.table td {
+  margin-bottom: 30vh;
+  height: 14vh;
+}
+.table th, .table td {
+  padding: 10px;
+  background-color: #78ff56b4; 
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
+}
+
+.table tr {
+  border-top: 20px solid #fff;
+}
+.table th
+{
+  background-color: #8d8d8d7e;
 }
