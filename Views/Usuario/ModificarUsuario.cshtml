@@ -1,9 +1,8 @@
 @using tl2_tp10_2023_julian_quin.ViewModels
 @model ModificarUsuarioViewModel
-@*Esta vista recibe como modelo que se un objeto del tipo Usuario, se debe pasar por parametro el objeto*@
-<h2>Modificar Usuario</h2>
+<h5>Modificar Usuario</h5>
 
-<form asp-controller="Usuario" asp-action="ModificarUsuario">
+<form class="forms_Modificar" asp-controller="Usuario" asp-action="ModificarUsuario">
     <input hidden asp-for="@Model.Id">
     <div class="form-group">
         <label asp-for="@Model.NombreDeUsuario"></label>
@@ -23,8 +22,3 @@
     <button type="submit" class="btn btn-success">Modificar</button>
 </form>
 @section Scripts { <partial name="_ValidationScriptsPartial" /> }
-
- @*asp-action hace referencia al nombre del endpoint [post], de ahí la importancia 
- de que si el el endpoint [get] y el [post] tienen distintos nombres, entonces primero me aseguro de que la vista 
- para el endpoint get exista, pues es lo primero que se agarra y dentro de esa vista debe estar explicito el nombre
- del endpoint [post] que será diferente al nombre de la (vista y del endpoin get) si se quiere*@
