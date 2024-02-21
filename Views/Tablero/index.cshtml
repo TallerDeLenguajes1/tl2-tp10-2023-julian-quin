@@ -12,7 +12,7 @@
         </li>
         <li class="d-inline-block">
             <a class="btn" style="background-color: #636363c7; color: white;" role="button" aria-pressed="true"
-                asp-controller="Tarea" asp-action="Nuevatarea" asp-route-idTablero="">Crear Tareas</a>
+                asp-controller="Tarea" asp-action="NuevaTarea" asp-route-idTablero="">Crear Tareas</a>
         </li>
     </ul>
 </nav>
@@ -48,7 +48,7 @@ else
                                 <img src="~/img/tareas.png"alt="tareas" style="width: 18mm; height: 10mm;">Tareas
                             </a>
                             <a class="btn btn-sm" style="color: rgb(0, 0, 0);" role="button"
-                                asp-controller="Tarea" asp-action="NuevaTareaTableroExplicito" asp-route-idTablero="@tablero.Id">
+                                asp-controller="Tarea" asp-action="NuevaTareaDesdeUnTablero" asp-route-idTablero="@tablero.Id">
                                 <img src="~/img/nuevaTarea.png"alt="Nuevatarea" style="width: 12mm; height: 12mm;">Añadir Tarea
                             </a>
                             @if(mensaje!=null && idTablero == tablero.Id)
@@ -75,7 +75,7 @@ else
 else
 {
     <div class="table-responsive">
-        <table class="table">
+        <table class="table table-tb-no-propios">
             <tbody>
                 @foreach (var tablero in Model.TablerosNoPropios)
                 {
