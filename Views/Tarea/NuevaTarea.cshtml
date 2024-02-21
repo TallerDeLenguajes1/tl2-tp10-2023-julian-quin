@@ -1,7 +1,13 @@
 @using tl2_tp10_2023_julian_quin.ViewModels
 @model CrearTareaViewModel
 <h2>Crear Tarea</h2>
-
+<nav class="mb-4" style="margin-right: 10vw;">
+    <ul class="list-unstyled" >
+        <li class="d-inline-block"  style="margin-left: 340px;">
+            <a class="btn btn-secondary" role="button" aria-pressed="true" asp-controller="Tablero" asp-action="Index" style="color: rgb(255, 255, 255); background-color:rgb(117, 117, 117);">Volver</a>
+        </li>
+    </ul>
+</nav>
 <form class="forms_Crear" asp-controller="Tarea" asp-action ="NuevaTarea"> 
     
     <div class="form-group">
@@ -48,6 +54,7 @@
      <div class="form-group">
         <label asp-for="@Model.IdUsuarioAsignado">Asignar usuario</label>
         <select asp-for="@Model.IdUsuarioAsignado" class="form-control">
+            <option value="">sin Asignar</option>
             @foreach (var usuario in Model.Usuarios)
             {
                 <option value="@usuario.Id">@usuario.NombreDeUsuario</option>

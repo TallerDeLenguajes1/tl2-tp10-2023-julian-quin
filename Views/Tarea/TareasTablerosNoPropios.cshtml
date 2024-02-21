@@ -37,7 +37,7 @@
                 <td>
                     @if( ViewBag.idSession == tarea.IdUsuarioAsignado)
                     {
-                        <form class ="formulario-personalizado" asp-controller="Tarea" asp-action="CambiarEstadoTarea">
+                        <form class ="formulario-personalizado" asp-controller="Tarea" asp-action="CambiarEstadoTareaTablerosNoPropio">
                             <select name="Estado" asp-items="@Html.GetEnumSelectList<EstadoTarea>()">
                             </select>
                             <input hidden name="idTarea" value="@tarea.Id">
