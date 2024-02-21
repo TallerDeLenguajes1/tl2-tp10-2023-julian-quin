@@ -1,3 +1,4 @@
+@model int 
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-12">
@@ -13,7 +14,10 @@
 <nav class="mb-4">
     <ul class="list-unstyled">
         <li class="d-inline-block">
-            <a class="btn btn-secondary" role="button" aria-pressed="true" asp-controller="Tablero" asp-action="Index"  style="color: rgb(255, 255, 255); background-color:rgb(0, 0, 0);">Volver</a>
+            <a class="btn btn-secondary" role="button" aria-pressed="true" asp-controller="Tarea" asp-action="TareasTablerosPropios" asp-route-idTablero="@Model" style="color: rgb(255, 255, 255); background-color:rgb(0, 0, 0);">Ver el tablero</a>
+        </li>
+        <li class="d-inline-block">
+            <a class="btn btn-secondary" role="button" aria-pressed="true" asp-controller="Tablero" asp-action="Index" style="color: rgb(255, 255, 255); background-color:rgb(0, 0, 0);">cancelar</a>
         </li>
     </ul>
 </nav>
