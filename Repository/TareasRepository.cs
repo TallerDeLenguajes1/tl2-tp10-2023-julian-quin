@@ -11,7 +11,37 @@ public class TareasRepository:ITareasRepository
     }
     
 
-    //Crear una nueva tarea en un tablero. (recibe un idTablero, devuelve un objeto Tarea)
+    public List<Tarea> Tareas()
+    {
+        string query =  "SELECT Tarea.id, Tarea.id_tablero , Tarea.nombre, Tarea.descripcion, Tarea.color, Tarea.id_usuario_asignado, Tarea.estado, Usuario.nombre_de_usuario FROM Tarea LEFT JOIN usuario ON Usuario.id = Tarea.id_usuario_asignado;";
+        List<Tarea> tareas = new();
+        Tarea tarea;
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion) )
+        {
+            connection.Open();
+            var command = new SQLiteCommand(query, connection);
+            using (SQLiteDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    tarea = new Tarea();
+                    tarea.Nombre = reader["nombre"].ToString();
+                    tarea.Color = reader["color"].ToString();
+                    if(reader["id_usuario_asignado"]!= DBNull.Value)tarea.IdUsuarioAsignado =Convert.ToInt32(reader["id_usuario_asignado"]);
+                    else tarea.IdUsuarioAsignado = null;
+                    tarea.Estado = (EstadoTarea)Convert.ToInt32(reader["estado"]);
+                    tarea.Id =  Convert.ToInt32(reader["id"]);
+                    tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
+                    tarea.Descripcion= reader["descripcion"].ToString();
+                    if(reader["id_usuario_asignado"] == DBNull.Value)tarea.NombreUsuarioAsignado="Sin asignar";
+                    else tarea.NombreUsuarioAsignado= reader["nombre_de_usuario"].ToString();
+                    tareas.Add(tarea);
+                }
+            }
+        }
+        return tareas;
+
+    }
     public Tarea CrearTarea(int idTablero, Tarea tarea)
     {
         var query = "INSERT INTO Tarea (id_tablero,nombre,descripcion,color,id_usuario_asignado,estado) VALUES (@idTablero,@nombre,@descripcion,@color,@idU,@estado)";
@@ -87,7 +117,7 @@ public class TareasRepository:ITareasRepository
     //Listar todas las tareas asignadas a un usuario específico.(recibe un idUsuario devuelve un list de tareas)
     public List<Tarea> TareasDeUnUsuario(int idUsuario)
     {
-       string query =  "SELECT Tarea.id, Tarea.id_tablero , Tarea.nombre, Tarea.descripcion, Tarea.color, Tarea.id_usuario_asignado, Tarea.estado, Usuario.nombre_de_usuario FROM Tarea LEFT JOIN usuario ON Usuario.id = Tarea.id_usuario_asignado WHERE Usuario.id = @idusuario";
+        string query =  "SELECT Tarea.id, Tarea.id_tablero , Tarea.nombre, Tarea.descripcion, Tarea.color, Tarea.id_usuario_asignado, Tarea.estado, Usuario.nombre_de_usuario FROM Tarea LEFT JOIN usuario ON Usuario.id = Tarea.id_usuario_asignado WHERE Usuario.id = @idusuario";
         List<Tarea> tareas = new();
         Tarea tarea;
         using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion) )
@@ -178,5 +208,37 @@ public class TareasRepository:ITareasRepository
             command.ExecuteNonQuery();
             connection.Close();
         }
+    }
+    public List<Tarea> TareasViaEstado(int idUsuario, EstadoTarea estado)
+    {
+       string query =  "SELECT Tarea.id, Tarea.id_tablero , Tarea.nombre, Tarea.descripcion, Tarea.color, Tarea.id_usuario_asignado, Tarea.estado, Usuario.nombre_de_usuario FROM Tarea JOIN usuario ON Usuario.id = Tarea.id_usuario_asignado WHERE Tarea.id_usuario_asignado = @idUsuario AND Tarea.estado = @estado";
+        List<Tarea> tareas = new();
+        Tarea tarea;
+        using (SQLiteConnection connection = new SQLiteConnection(_cadenaConexion) )
+        {
+            connection.Open();
+            var command = new SQLiteCommand(query, connection);
+            command.Parameters.Add(new SQLiteParameter("@idUsuario",idUsuario));
+             command.Parameters.Add(new SQLiteParameter("@estado",estado));
+            using (SQLiteDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    tarea = new Tarea();
+                    tarea.Nombre = reader["nombre"].ToString();
+                    tarea.Color = reader["color"].ToString();
+                    if(reader["id_usuario_asignado"]!= DBNull.Value)tarea.IdUsuarioAsignado =Convert.ToInt32(reader["id_usuario_asignado"]);
+                    else tarea.IdUsuarioAsignado = null;
+                    tarea.Estado = (EstadoTarea)Convert.ToInt32(reader["estado"]);
+                    tarea.Id =  Convert.ToInt32(reader["id"]);
+                    tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
+                    tarea.Descripcion= reader["descripcion"].ToString();
+                    tarea.NombreUsuarioAsignado= reader["nombre_de_usuario"].ToString();
+                    tareas.Add(tarea);
+                }
+            }
+        }
+        return tareas;
+
     }
 }
