@@ -10,7 +10,7 @@ public class UsuarioController : Controller
     private readonly IUsuarioRepository _accesoUsuarios;
     private readonly ITareasRepository _tareaRepository;
 
-    public UsuarioController(ILogger<UsuarioController> logger, IUsuarioRepository usuarioRepository,ITareasRepository tareaRepository)
+    public UsuarioController(ILogger<UsuarioController> logger, IUsuarioRepository usuarioRepository, ITareasRepository tareaRepository)
     {
         _logger = logger;
         _accesoUsuarios = usuarioRepository;
@@ -18,73 +18,133 @@ public class UsuarioController : Controller
     }
 
     public IActionResult Index()
-    { 
-        if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
-        List<Usuario> usuarios = new();
-        if(EsAdmin())
+    {
+        try
         {
-           usuarios = _accesoUsuarios.Usuarios();
-           var usuariosView = new IndexUsuarioViewModel(usuarios);
-           return View(usuariosView);
+            if (!SeLogueo()) return RedirectToRoute(new { controller = "Login", action = "Index" });
+            List<Usuario> usuarios = new();
+            if (EsAdmin())
+            {
+                usuarios = _accesoUsuarios.Usuarios();
+                var usuariosView = new IndexUsuarioViewModel(usuarios);
+                return View(usuariosView);
+            }
+            var usuarioId = (int)HttpContext.Session.GetInt32("Id");
+            var usuario = _accesoUsuarios.UsuarioViaId(usuarioId);
+            usuarios.Add(usuario);
+            return View(new IndexUsuarioViewModel(usuarios));
+
         }
-        var usuarioId = (int)HttpContext.Session.GetInt32("Id");
-        var usuario = _accesoUsuarios.UsuarioViaId(usuarioId); 
-        usuarios.Add(usuario);
-        return View(new IndexUsuarioViewModel(usuarios));
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return View("Error");
+        }
+
     }
 
     [HttpGet]
     public IActionResult NuevoUsuario()
     {
-        if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
-        if(!EsAdmin())return View("MensajeAdvertencia");
-        return View(new CrearUsuarioViewModel());
+        try
+        {
+            if (!SeLogueo()) return RedirectToRoute(new { controller = "Login", action = "Index" });
+            if (!EsAdmin()) return View("MensajeAdvertencia");
+            return View(new CrearUsuarioViewModel());
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return View("Error");
+        }
+
     }
 
     [HttpPost]
     public IActionResult NuevoUsuario(CrearUsuarioViewModel usuario)
     {
-        if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
-        if(!EsAdmin()) return View("MensajeAdvertencia");
-        if(!ModelState.IsValid) return RedirectToAction("Index");
-        var nuevoUsuario = new Usuario(usuario);
-        _accesoUsuarios.NuevoUsuario(nuevoUsuario);
-        return RedirectToAction("Index");
+        try
+        {
+            if (!SeLogueo()) return RedirectToRoute(new { controller = "Login", action = "Index" });
+            if (!EsAdmin()) return View("MensajeAdvertencia");
+            if (!ModelState.IsValid) return RedirectToAction("Index");
+            var nuevoUsuario = new Usuario(usuario);
+            _accesoUsuarios.NuevoUsuario(nuevoUsuario);
+            return RedirectToAction("Index");
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return View("Error");
+        }
+
     }
 
     [HttpGet]
     public IActionResult ModificarUsuario(int idUsuario)
     {
-        if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
-        if(!EsAdmin())return View("MensajeAdvertencia");
-        var usuario = _accesoUsuarios.UsuarioViaId(idUsuario);
-        var usuarioViewModel = new ModificarUsuarioViewModel(usuario);
-        return View(usuarioViewModel);
+        try
+        {
+            if (!SeLogueo()) return RedirectToRoute(new { controller = "Login", action = "Index" });
+            if (!EsAdmin()) return View("MensajeAdvertencia");
+            var usuario = _accesoUsuarios.UsuarioViaId(idUsuario);
+            var usuarioViewModel = new ModificarUsuarioViewModel(usuario);
+            return View(usuarioViewModel);
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return View("Error");
+        }
+
     }
 
     [HttpPost]
     public IActionResult ModificarUsuario(ModificarUsuarioViewModel usuarioUp)
     {
-        if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
-        if(!EsAdmin())return View("MensajeAdvertencia");
-        if(!ModelState.IsValid) return RedirectToAction("Index");
-        var usuario = new Usuario(usuarioUp);
-        _accesoUsuarios.ActualizarUsuario(usuario, usuario.Id);
-        return RedirectToAction("Index");
+        try
+        {
+            if (!SeLogueo()) return RedirectToRoute(new { controller = "Login", action = "Index" });
+            if (!EsAdmin()) return View("MensajeAdvertencia");
+            if (!ModelState.IsValid) return RedirectToAction("Index");
+            var usuario = new Usuario(usuarioUp);
+            _accesoUsuarios.ActualizarUsuario(usuario, usuario.Id);
+            return RedirectToAction("Index");
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return View("Error");
+        }
+
     }
 
     public IActionResult EliminarUsuario(int idUsuario)
     {
-        if(!SeLogueo())return RedirectToRoute(new {controller = "Login", action = "Index" });
-        if(!EsAdmin())return View("MensajeAdvertencia");
-        var tareas = _tareaRepository.TareasDeUnUsuario(idUsuario);
-        foreach (var tarea in tareas)
+        try
         {
-            tarea.IdUsuarioAsignado = null;
-            _tareaRepository.ModificarTarea(tarea.Id,tarea);
+            if (!SeLogueo()) return RedirectToRoute(new { controller = "Login", action = "Index" });
+            if (!EsAdmin()) return View("MensajeAdvertencia");
+            var tareas = _tareaRepository.TareasDeUnUsuario(idUsuario);
+            foreach (var tarea in tareas)
+            {
+                tarea.IdUsuarioAsignado = null;
+                _tareaRepository.ModificarTarea(tarea.Id, tarea);
+            }
+            _accesoUsuarios.EliminarUsuario(idUsuario);
+            return RedirectToAction("Index");
+
         }
-        _accesoUsuarios.EliminarUsuario(idUsuario);
-        return RedirectToAction("Index");
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            return View("Error");
+        }
+
     }
 
     private bool EsAdmin()
@@ -94,10 +154,10 @@ public class UsuarioController : Controller
     }
     private bool SeLogueo()
     {
-        if(HttpContext.Session.GetString("Usuario") != null && HttpContext.Session.GetInt32("Id") != null 
+        if (HttpContext.Session.GetString("Usuario") != null && HttpContext.Session.GetInt32("Id") != null
         && HttpContext.Session.GetString("NivelAcceso") != null) return true;
 
-        return false; 
+        return false;
     }
 
 }

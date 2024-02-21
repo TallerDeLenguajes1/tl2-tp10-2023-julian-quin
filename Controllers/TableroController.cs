@@ -29,7 +29,7 @@ public class TableroController : Controller
         catch (Exception ex)
         {
             _logger.LogError(ex.ToString());
-            return BadRequest();
+            return View("Error");
         }
 
     }
@@ -46,7 +46,7 @@ public class TableroController : Controller
         catch (Exception ex)
         {
             _logger.LogError(ex.ToString());
-            return BadRequest();
+            return View("Error");
         }
     }
 
@@ -69,7 +69,7 @@ public class TableroController : Controller
         catch (Exception ex)
         {
             _logger.LogError(ex.ToString());
-            return BadRequest();
+            return View("Error");
         }
 
     }
@@ -92,7 +92,7 @@ public class TableroController : Controller
         catch (Exception ex)
         {
             _logger.LogError(ex.ToString());
-            return BadRequest();
+            return View("Error");
         }
 
     }
@@ -112,7 +112,7 @@ public class TableroController : Controller
         catch (Exception ex)
         {
             _logger.LogError(ex.ToString());
-            return BadRequest();
+            return View("Error");
         }
     }
 
@@ -132,7 +132,7 @@ public class TableroController : Controller
         catch (Exception ex)
         {
             _logger.LogError(ex.ToString());
-            return BadRequest();
+            return View("Error");
         }
 
     }
@@ -147,13 +147,13 @@ public class TableroController : Controller
                 return RedirectToAction("Index");
                 
             }
-            return View("MensajeAdvertencia");
+            return View("MensajeAdvertencia", idTablero);
            
         }
         catch (Exception ex)
         {
             _logger.LogError(ex.ToString());
-            return BadRequest();
+            return View("Error");
         }
 
 
